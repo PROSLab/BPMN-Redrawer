@@ -1,0 +1,8 @@
+{
+  "unit-cypress": {
+    "runnerCommand": "cypress run-ct"
+  },
+  "e2e-cypress": {
+    "runnerCommand": "cross-env E2E_TEST=true start-test \"quasar dev\" http-get://localhost:7000 \"cypress run\""
+  }
+}

@@ -1,0 +1,16 @@
+[run]
+include =
+        ./spm2021_ram_backend/api/*
+        ./spm2021_ram_backend/commons/utils.py
+        ./spm2021_ram_backend/bpmn/*
+omit =
+        *tests*
+        *__init__*
+        ./spm2021_ram_backend/api/views.py
+
+[report]
+show_missing = True
+exclude_lines = if TYPE_CHECKING:
+
+[html]
+directory = backend_coverage

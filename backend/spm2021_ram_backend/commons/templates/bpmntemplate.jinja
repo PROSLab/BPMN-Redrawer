@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="{{ diagram.definition_id }}" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="8.8.3">
+{% if diagram.collaboration is not none -%}
+<bpmn:collaboration id="{{ diagram.collaboration.id }}">
+{%- for participant in diagram.collaboration.participants %}
+    <bpmn:participant id="{{ participant.id }}" {{ 'processRef="{}"'.format(participant.process.id) if participant.process.id != "" }} name="{{ participant.get_name() }}" />
+{%- endfor %}
+{%- for m_flow in diagram.collaboration.message_flows %}
+    {{ m_flow.render_element() }}
+{%- endfor %}
+</bpmn:collaboration>
+{%- endif %}
+{%- for process in diagram.processes %}
+<bpmn:process id="{{ process.id }}">
+    {%- for element in process.elements %}
+    {{ element.render_element() }}
+    {%- endfor %}
+</bpmn:process>
+{%- endfor %}
+<bpmndi:BPMNDiagram id="{{ diagram.id }}">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="{{ diagram.collaboration.id if diagram.collaboration is not none else diagram.processes[0].id }}">
+      {%- for process in diagram.processes -%}
+      {%- for element in process.elements -%}
+      {{ element.render_shape() }}
+      {%- endfor %}
+      {%- endfor +%}
+      {% if diagram.collaboration is not none -%}
+      {%- for participant in diagram.collaboration.participants -%}
+      <bpmndi:BPMNShape id="{{ participant.id }}_di" bpmnElement="{{ participant.id }}" >
+        <dc:Bounds x="{{ participant.prediction.top_left_x }}" y="{{ participant.prediction.top_left_y }}" width="{{ participant.prediction.width }}" height="{{ participant.prediction.height }}" />
+      </bpmndi:BPMNShape>
+      {%- endfor +%}
+      {%- for m_flow in diagram.collaboration.message_flows -%}
+      {{ m_flow.render_shape() }}
+      {%- endfor %}
+      {%- endif %}
+    </bpmndi:BPMNPlane>
+</bpmndi:BPMNDiagram>
+</bpmn:definitions>

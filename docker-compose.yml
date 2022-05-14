@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  backend:
+    build: backend
+    ports:
+      - "5000:5000"
+    restart: always
+    container_name: spm_backend
+
+  frontend:
+    depends_on:
+      - backend
+    build: frontend
+    ports:
+      - "7000:7000"
+    restart: always
+    container_name: spm_frontend

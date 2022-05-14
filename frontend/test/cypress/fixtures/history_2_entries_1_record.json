@@ -1,0 +1,14 @@
+[
+  {
+    "image_id": "img1.png",
+    "model_id": "model1.bpmn",
+    "timestamp": 1641808800000,
+    "user": "ric"
+  },
+  {
+    "image_id": "img2.png",
+    "model_id": "model2.bpmn",
+    "timestamp": 1641898800000,
+    "user": "ric"
+  }
+]

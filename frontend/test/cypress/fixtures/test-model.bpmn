@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_41pzg82" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="8.8.3">
+<bpmn:collaboration id="Collaboration_f50v6sx">
+    <bpmn:participant id="Participant_ysp8xri" processRef="Process_p2inim7" name="Process" />
+</bpmn:collaboration>
+<bpmn:process id="Process_p2inim7">
+    <bpmn:task id="Task_qw5a87h" name="Documents complete?"/>
+    <bpmn:task id="Task_9pi3x0c" name="Accept Student"/>
+    <bpmn:task id="Task_soviofz" name="Reject Student"/>
+    <bpmn:task id="Task_i8m70s9" name="Documents in time?"/>
+    <bpmn:task id="Task_157ul5s" name="Is Student Qualified?"/>
+    <bpmn:task id="Task_pjddwoi" name="Archive Documents"/>
+    <bpmn:startEvent id="StartEvent_xn6ydet" name="" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_tjbx5v5" name="" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_zkv0t79" name="" />
+    <bpmn:parallelGateway id="ParallelGateway_4yyf1cq" name="" />
+    <bpmn:parallelGateway id="ParallelGateway_zkl255m" name="" />
+    <bpmn:endEvent id="EndEvent_nn0myzb" name=""/>
+    <bpmn:sequenceFlow id="SequenceFLow_7kw4l75" sourceRef="ParallelGateway_zkl255m" targetRef="Task_qw5a87h" />
+    <bpmn:sequenceFlow id="SequenceFLow_b5tp13s" sourceRef="StartEvent_xn6ydet" targetRef="ParallelGateway_zkl255m" />
+    <bpmn:sequenceFlow id="SequenceFLow_h09mbta" sourceRef="ExclusiveGateway_zkv0t79" targetRef="Task_soviofz" />
+    <bpmn:sequenceFlow id="SequenceFLow_fm2w23p" sourceRef="ParallelGateway_zkl255m" targetRef="Task_i8m70s9" />
+    <bpmn:sequenceFlow id="SequenceFLow_jzryhla" sourceRef="Task_soviofz" targetRef="ExclusiveGateway_tjbx5v5" />
+    <bpmn:sequenceFlow id="SequenceFLow_suo5wis" sourceRef="ExclusiveGateway_zkv0t79" targetRef="Task_9pi3x0c" />
+    <bpmn:sequenceFlow id="SequenceFLow_gy7404b" sourceRef="Task_157ul5s" targetRef="ExclusiveGateway_zkv0t79" />
+    <bpmn:sequenceFlow id="SequenceFLow_77dgm9u" sourceRef="Task_9pi3x0c" targetRef="ExclusiveGateway_tjbx5v5" />
+    <bpmn:sequenceFlow id="SequenceFLow_97ofonj" sourceRef="Task_i8m70s9" targetRef="ParallelGateway_4yyf1cq" />
+    <bpmn:sequenceFlow id="SequenceFLow_ye8pxmk" sourceRef="Task_qw5a87h" targetRef="ParallelGateway_4yyf1cq" />
+    <bpmn:sequenceFlow id="SequenceFLow_7qfiqeh" sourceRef="ParallelGateway_4yyf1cq" targetRef="Task_157ul5s" />
+    <bpmn:sequenceFlow id="SequenceFLow_f328e9m" sourceRef="ExclusiveGateway_tjbx5v5" targetRef="Task_pjddwoi" />
+    <bpmn:sequenceFlow id="SequenceFLow_nw7tuct" sourceRef="EndEvent_nn0myzb" targetRef="EndEvent_nn0myzb" />
+</bpmn:process>
+<bpmndi:BPMNDiagram id="BPMNDiagram_fekkawf">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_f50v6sx"><bpmndi:BPMNShape id="Task_qw5a87h_di" bpmnElement="Task_qw5a87h" >
+        <dc:Bounds x="292.87756" y="23.069296" width="103.621124" height="83.21574" />
+      </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Task_9pi3x0c_di" bpmnElement="Task_9pi3x0c" >
+        <dc:Bounds x="793.99054" y="187.69142" width="102.96942" height="83.182785" />
+      </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Task_soviofz_di" bpmnElement="Task_soviofz" >
+        <dc:Bounds x="794.7726" y="23.055244" width="102.446594" height="83.19817" />
+      </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Task_i8m70s9_di" bpmnElement="Task_i8m70s9" >
+        <dc:Bounds x="291.61993" y="188.01971" width="104.33826" height="83.37128" />
+      </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Task_157ul5s_di" bpmnElement="Task_157ul5s" >
+        <dc:Bounds x="545.01215" y="101.333405" width="103.759155" height="84.484955" />
+      </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Task_pjddwoi_di" bpmnElement="Task_pjddwoi" >
+        <dc:Bounds x="1005.4485" y="101.40309" width="103.97766" height="84.344086" />
+      </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="StartEvent_xn6ydet_di" bpmnElement="StartEvent_xn6ydet" >
+        <dc:Bounds x="103.65504" y="123.62282" width="39.822945" height="39.917175" />
+      </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="ExclusiveGateway_tjbx5v5_di" bpmnElement="ExclusiveGateway_tjbx5v5" >
+        <dc:Bounds x="924.2473" y="116.57754" width="53.15332" height="54.601814" />
+      </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="ExclusiveGateway_zkv0t79_di" bpmnElement="ExclusiveGateway_zkv0t79" >
+        <dc:Bounds x="695.7557" y="117.52889" width="53.631287" height="52.943382" />
+      </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="ParallelGateway_4yyf1cq_di" bpmnElement="ParallelGateway_4yyf1cq" >
+        <dc:Bounds x="443.4829" y="116.88966" width="52.169525" height="53.369965" />
+      </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="ParallelGateway_zkl255m_di" bpmnElement="ParallelGateway_zkl255m" >
+        <dc:Bounds x="192.89636" y="116.58569" width="52.930313" height="53.52272" />
+      </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="EndEvent_nn0myzb_di" bpmnElement="EndEvent_nn0myzb" >
+        <dc:Bounds x="1135.453" y="123.46523" width="39.988525" height="39.625404" />
+      </bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="SequenceFLow_7kw4l75_di" bpmnElement="SequenceFLow_7kw4l75" >
+        <di:waypoint x="220.6533" y="119.741234" />
+        <di:waypoint x="294.27362" y="65.06378" />
+      </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="SequenceFLow_b5tp13s_di" bpmnElement="SequenceFLow_b5tp13s" >
+        <di:waypoint x="142.57968" y="144.42186" />
+        <di:waypoint x="195.59087" y="144.42186" />
+      </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="SequenceFLow_h09mbta_di" bpmnElement="SequenceFLow_h09mbta" >
+        <di:waypoint x="723.1105" y="119.75512" />
+        <di:waypoint x="795.4788" y="65.56285" />
+      </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="SequenceFLow_fm2w23p_di" bpmnElement="SequenceFLow_fm2w23p" >
+        <di:waypoint x="221.2713" y="169.46924" />
+        <di:waypoint x="294.01233" y="230.4811" />
+      </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="SequenceFLow_jzryhla_di" bpmnElement="SequenceFLow_jzryhla" >
+        <di:waypoint x="895.771" y="65.49912" />
+        <di:waypoint x="951.19666" y="118.62378" />
+      </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="SequenceFLow_suo5wis_di" bpmnElement="SequenceFLow_suo5wis" >
+        <di:waypoint x="722.18304" y="169.90459" />
+        <di:waypoint x="794.852" y="231.0534" />
+      </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="SequenceFLow_gy7404b_di" bpmnElement="SequenceFLow_gy7404b" >
+        <di:waypoint x="646.5705" y="144.44006" />
+        <di:waypoint x="697.6895" y="144.44006" />
+      </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="SequenceFLow_77dgm9u_di" bpmnElement="SequenceFLow_77dgm9u" >
+        <di:waypoint x="894.92633" y="230.93663" />
+        <di:waypoint x="951.46826" y="169.79716" />
+      </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="SequenceFLow_97ofonj_di" bpmnElement="SequenceFLow_97ofonj" >
+        <di:waypoint x="394.29718" y="230.44566" />
+        <di:waypoint x="470.3677" y="169.66159" />
+      </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="SequenceFLow_ye8pxmk_di" bpmnElement="SequenceFLow_ye8pxmk" >
+        <di:waypoint x="394.1929" y="65.239265" />
+        <di:waypoint x="470.4636" y="119.35951" />
+      </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="SequenceFLow_7qfiqeh_di" bpmnElement="SequenceFLow_7qfiqeh" >
+        <di:waypoint x="495.5069" y="144.87909" />
+        <di:waypoint x="547.062" y="143.96921" />
+      </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="SequenceFLow_f328e9m_di" bpmnElement="SequenceFLow_f328e9m" >
+        <di:waypoint x="976.7944" y="144.40695" />
+        <di:waypoint x="1007.3006" y="144.40695" />
+      </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="SequenceFLow_nw7tuct_di" bpmnElement="SequenceFLow_nw7tuct" >
+        <di:waypoint x="1107.173" y="144.2335" />
+        <di:waypoint x="1138.5774" y="144.2335" />
+      </bpmndi:BPMNEdge>
+        
+      <bpmndi:BPMNShape id="Participant_ysp8xri_di" bpmnElement="Participant_ysp8xri" >
+        <dc:Bounds x="22.132702" y="4.7876806" width="1248.2532" height="329.26306" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+</bpmndi:BPMNDiagram>
+</bpmn:definitions>

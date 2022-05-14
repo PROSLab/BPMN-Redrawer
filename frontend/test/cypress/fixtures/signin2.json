@@ -1,0 +1,24 @@
+{
+    "kind": "identitytoolkit#GetAccountInfoResponse",
+    "users": [
+        {
+            "localId": "Y2xVJGIQIbdmQtRwkaztIvXpnWM2",
+            "email": "marco.scarp@hotmail.it",
+            "passwordHash": "UkVEQUNURUQ=",
+            "emailVerified": true,
+            "passwordUpdatedAt": 1644504247266,
+            "providerUserInfo": [
+                {
+                    "providerId": "password",
+                    "federatedId": "marco.scarp@hotmail.it",
+                    "email": "marco.scarp@hotmail.it",
+                    "rawId": "marco.scarp@hotmail.it"
+                }
+            ],
+            "validSince": "1644504247",
+            "lastLoginAt": "1645524747499",
+            "createdAt": "1644504247266",
+            "lastRefreshAt": "2022-02-22T10:12:27.499Z"
+        }
+    ]
+}
