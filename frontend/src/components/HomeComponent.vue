@@ -70,7 +70,7 @@
     <div style="text-align: center">
       <q-checkbox class="q-pr-md" v-model="ocrEnabled" label="OCR"></q-checkbox>
       <q-btn
-        :disable="!loadedFromComputer"
+        :disable="!imageLoaded"
         color="primary"
         icon-right="arrow_forward"
         :label="$t('home.convert')"
@@ -79,7 +79,27 @@
     </div>
   </div>
 
-  <div class="q-pt-xl" style="margin: auto; text-align: center; width: 100%">
+  <div class="q-pa-md" style="text-align: center">
+    <div style="font-size: 18px">{{ $t('home.examples') }}</div>
+    <div style="font-size: 14px">{{ $t('home.examplesInstruction') }}</div>
+    <div class="row justify-evenly wrap">
+      <div class="q-pa-sm" v-for="i in 3" :key="i">
+        <q-img
+          style="border: 3px black solid; margin: auto"
+          sizes="(max-width: 400px) 400px, (max-height: 400px) 400px"
+          fit="contain"
+          position="50% 50%"
+          width="400px"
+          height="400px"
+          :src="require(`../assets/example${i}.png`)"
+          @click="loadExampleImage(i)"
+        >
+        </q-img>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-pt-md" style="margin: auto; text-align: center; width: 100%">
     <div style="font-size: 18px">
       BPMN Redrawer
       <br />
@@ -135,7 +155,7 @@ export default defineComponent({
     const imageFilename = ref('');
     const conversionDialog: Ref<boolean> = ref(false);
     const conversionResult: Ref<string | null> = ref(null);
-    const loadedFromComputer = ref(false);
+    const imageLoaded = ref(false);
     const ocrEnabled = ref(true);
     interface ConversionResult {
       model_id?: string;
@@ -149,16 +169,23 @@ export default defineComponent({
         .then((result) => {
           imgSrc.value = result;
           imageFilename.value = file.value?.name as string;
-          loadedFromComputer.value = true;
+          imageLoaded.value = true;
         })
         .catch(() => {
           imgSrc.value = null;
-          loadedFromComputer.value = false;
+          imageLoaded.value = false;
           $q.notify({
             message: i18n.global.t('home.errorReading'),
             type: 'negative',
           });
         });
+    }
+
+    function loadExampleImage(i: number) {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      imgSrc.value = require(`../assets/example${i}.png`) as string;
+      imageLoaded.value = true;
+      imageFilename.value = `example${i}.png`;
     }
 
     function loadingOK() {
@@ -170,7 +197,7 @@ export default defineComponent({
 
     function loadingError() {
       imgSrc.value = null;
-      loadedFromComputer.value = false;
+      imageLoaded.value = false;
       $q.notify({
         message: i18n.global.t('home.errorLoading'),
         type: 'negative',
@@ -190,11 +217,8 @@ export default defineComponent({
     async function convertImage() {
       // Use imageName to send the path to backend for conversion
       // Use fullImageName to store the image on Firebase Storage
-      const extension = getExtension(file?.value?.name as string);
-      const imageBaseName = removeExtension(
-        file?.value?.name as string,
-        extension
-      );
+      const extension = getExtension(imageFilename.value);
+      const imageBaseName = removeExtension(imageFilename.value, extension);
       const imageName =
         imageBaseName +
         '-at-' +
@@ -305,9 +329,10 @@ export default defineComponent({
       tab: ref('from_computer'),
       imgSrc,
       loadImage,
+      loadExampleImage,
       filePicker,
       file,
-      loadedFromComputer,
+      imageLoaded,
       loadingOK,
       loadingError,
       convertImage,

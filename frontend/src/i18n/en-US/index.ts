@@ -22,6 +22,8 @@ export default {
     waitBackend: 'Waiting for a response from backend...',
     conversionCompleted: 'Conversion completed',
     errorConversion: 'Error during the conversion: {error}',
+    examples: 'Examples',
+    examplesInstruction: 'Click a model below to load the corresponding image',
   },
   main: {
     dark: 'Dark mode',

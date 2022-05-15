@@ -22,6 +22,9 @@ export default {
     waitBackend: 'Attendendo una risposta dal backend...',
     conversionCompleted: 'Conversione completata',
     errorConversion: 'Errore durante la conversione: {error}',
+    examples: 'Esempi',
+    examplesInstruction:
+      "Clicca su uno dei modelli sottostanti per caricare l'immagine corrispondente",
   },
   main: {
     dark: 'Modalità scura',

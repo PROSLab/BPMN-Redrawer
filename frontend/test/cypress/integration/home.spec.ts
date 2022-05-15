@@ -13,7 +13,7 @@ describe('Landing', () => {
   it('shows a placeholder image', () => {
     cy.fixture('placeholder.png').then((placeholder: string) => {
       cy.get('.q-img__image')
-        .last()
+        .eq(1)
         .should('have.attr', 'src')
         .and('contain', placeholder);
     });
