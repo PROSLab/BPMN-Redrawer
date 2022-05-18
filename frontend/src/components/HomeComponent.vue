@@ -50,25 +50,43 @@
       </q-card>
     </q-dialog>
 
-    <div class="q-pa-md" style="text-align: center">
-      <q-img
-        style="border: 3px black solid; margin: auto"
-        sizes="(max-width: 400px) 400px, (max-height: 400px) 400px"
-        fit="contain"
-        position="50% 50%"
-        width="400px"
-        height="400px"
-        placeholder-src="../assets/default-placeholder.png"
-        no-spinner
-        :src="imgSrc"
-        @load="loadingOK"
-        @error="loadingError"
-      >
-      </q-img>
+    <div class="row justify-center q-pa-md" style="text-align: center">
+      <div>
+        <q-img
+          style="border: 3px black solid; margin: auto"
+          sizes="(max-width: 400px) 400px, (max-height: 400px) 400px"
+          fit="contain"
+          position="50% 50%"
+          width="400px"
+          height="400px"
+          placeholder-src="../assets/default-placeholder.png"
+          no-spinner
+          :src="imgSrc"
+          @load="loadingOK"
+          @error="loadingError"
+        >
+        </q-img>
+      </div>
     </div>
 
     <div style="text-align: center">
-      <q-checkbox class="q-pr-md" v-model="ocrEnabled" label="OCR"></q-checkbox>
+      <q-checkbox
+        class="q-pr-md"
+        v-model="elementsEnabled"
+        label="Elements"
+      ></q-checkbox>
+      <q-checkbox
+        :disable="!elementsEnabled"
+        class="q-pr-md"
+        v-model="flowsEnabled"
+        label="Flows"
+      ></q-checkbox>
+      <q-checkbox
+        :disable="!elementsEnabled || !flowsEnabled"
+        class="q-pr-md"
+        v-model="ocrEnabled"
+        label="OCR"
+      ></q-checkbox>
       <q-btn
         :disable="!imageLoaded"
         color="primary"
@@ -156,6 +174,8 @@ export default defineComponent({
     const conversionDialog: Ref<boolean> = ref(false);
     const conversionResult: Ref<string | null> = ref(null);
     const imageLoaded = ref(false);
+    const elementsEnabled = ref(true);
+    const flowsEnabled = ref(true);
     const ocrEnabled = ref(true);
     interface ConversionResult {
       model_id?: string;
@@ -285,6 +305,8 @@ export default defineComponent({
           api
             .post('/convert', {
               imagePath: imageName,
+              elements: elementsEnabled.value,
+              flows: flowsEnabled.value,
               ocr: ocrEnabled.value,
             })
             .then((res) => {
@@ -339,6 +361,8 @@ export default defineComponent({
       conversionDialog,
       downloadModel,
       conversionResult,
+      elementsEnabled,
+      flowsEnabled,
       ocrEnabled,
     };
   },

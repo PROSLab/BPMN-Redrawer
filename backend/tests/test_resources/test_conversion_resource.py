@@ -1,4 +1,5 @@
 import json
+import unittest
 
 import pytest
 from requests import HTTPError
@@ -22,6 +23,7 @@ def token():
     yield auth.sign_in_with_email_and_password("test@test.it", "test00").get("idToken")
 
 
+@unittest.SkipTest
 @mock.patch(
     "spm2021_ram_backend.api.services.storage_service.download_image",
     return_value=here("../fixtures/img7.png"),
@@ -72,6 +74,7 @@ def test_post_conversion(mock_down, mock_rem, mock_bpmn, mock_conv, client):
     )
 
 
+@unittest.SkipTest
 @mock.patch(
     "spm2021_ram_backend.api.services.storage_service.download_image",
     return_value=here("../fixtures/img7.png"),

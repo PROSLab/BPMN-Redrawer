@@ -14,6 +14,7 @@ from spm2021_ram_backend.api.services import (
 )
 
 from flask_jwt_extended import jwt_required
+from spm2021_ram_backend.commons.utils import sample_bpmn
 
 
 class ConvertApi(Resource):
@@ -43,21 +44,24 @@ class ConvertApi(Resource):
         if orc_img is None or predict_img is None:
             return Response("Image {} not found in storage".format(image_id), 404)
 
-        obj_predictions = ps.predict_object(predict_img)
-        kp_predictions = ps.predict_keypoint(orc_img)
+        if "elements" in body.keys() and body.get("elements"):
+            obj_predictions = ps.predict_object(predict_img)
+            elements = cs.convert_object_predictions(obj_predictions)
 
-        elements = cs.convert_object_predictions(obj_predictions)
+            if "flows" in body.keys() and body.get("flows"):
+                kp_predictions = ps.predict_keypoint(orc_img)
+                flows = cs.convert_keypoint_prediction(kp_predictions)
+                cs.link_flows(flows, elements)
+                elements.extend(flows)
 
-        flows = cs.convert_keypoint_prediction(kp_predictions)
-        cs.link_flows(flows, elements)
-        elements.extend(flows)
+                if "ocr" in body.keys() and body.get("ocr"):
+                    text = os.get_text_from_png(orc_img)
+                    os.link_text(text, elements)
 
-        if "ocr" in body.keys() and body.get("ocr"):
-            text = os.get_text_from_png(orc_img)
-            os.link_text(text, elements)
-
-        bpmn_diagram = DiagramFactory.create_element(elements)
-        rendered_bpmn_model = cs.render_diagram(bpmn_diagram)
+            bpmn_diagram = DiagramFactory.create_element(elements)
+            rendered_bpmn_model = cs.render_diagram(bpmn_diagram)
+        else:
+            rendered_bpmn_model = sample_bpmn
 
         if token:
             try:
