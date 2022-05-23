@@ -39,9 +39,9 @@ class ConvertApi(Resource):
         if request.headers.get("Authorization") is not None:
             token = request.headers.get("Authorization").split()[1]
 
-        orc_img, predict_img = ss.get_ocr_and_predict_images(image_id, token)
+        ocr_img, predict_img = ss.get_ocr_and_predict_images(image_id, token)
 
-        if orc_img is None or predict_img is None:
+        if ocr_img is None or predict_img is None:
             return Response("Image {} not found in storage".format(image_id), 404)
 
         if "elements" in body.keys() and body.get("elements"):
@@ -49,14 +49,14 @@ class ConvertApi(Resource):
             elements = cs.convert_object_predictions(obj_predictions)
 
             if "flows" in body.keys() and body.get("flows"):
-                kp_predictions = ps.predict_keypoint(orc_img)
+                kp_predictions = ps.predict_keypoint(ocr_img)
                 flows = cs.convert_keypoint_prediction(kp_predictions)
                 cs.link_flows(flows, elements)
                 elements.extend(flows)
 
-                if "ocr" in body.keys() and body.get("ocr"):
-                    text = os.get_text_from_png(orc_img)
-                    os.link_text(text, elements)
+            if "ocr" in body.keys() and body.get("ocr"):
+                text = os.get_text_from_png(ocr_img)
+                os.link_text(text, elements)
 
             bpmn_diagram = DiagramFactory.create_element(elements)
             rendered_bpmn_model = cs.render_diagram(bpmn_diagram)

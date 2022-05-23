@@ -82,7 +82,7 @@
         label="Flows"
       ></q-checkbox>
       <q-checkbox
-        :disable="!elementsEnabled || !flowsEnabled"
+        :disable="!elementsEnabled"
         class="q-pr-md"
         v-model="ocrEnabled"
         label="OCR"
