@@ -11,8 +11,8 @@
       ref="filePicker"
       style="display: none"
       accept=".png, .jpeg, .jpg, .bmp"
-      v-model="file"
-      @update:model-value="loadImage()"
+      v-model="imageFile"
+      @update:model-value="loadImage(imageFile)"
     ></q-file>
     <div class="q-pt-xl" style="text-align: center">
       <q-btn
@@ -64,6 +64,8 @@
           :src="imgSrc"
           @load="loadingOK"
           @error="loadingError"
+          @dragover="allowDrop($event)"
+          @drop="drop($event)"
         >
         </q-img>
       </div>
@@ -167,8 +169,9 @@ export default defineComponent({
   setup() {
     const $q = useQuasar();
     const bpmnStore = useBpmnStore();
+    const tab = ref('from_computer');
     const filePicker: Ref<QFile | null> = ref(null);
-    const file: Ref<File | null> = ref(null);
+    const imageFile: Ref<File | null> = ref(null);
     const imgSrc: Ref<string | ArrayBuffer | null | undefined> = ref(null);
     const imageFilename = ref('');
     const conversionDialog: Ref<boolean> = ref(false);
@@ -183,12 +186,33 @@ export default defineComponent({
       xml: string;
     }
 
-    async function loadImage() {
+    const allowDrop = (e: DragEvent) => {
+      e.preventDefault();
+    };
+
+    const drop = async (e: DragEvent) => {
+      e.preventDefault();
+      const files = (e.dataTransfer as DataTransfer).files;
+      if (files?.length > 0) {
+        const file = files[0];
+        if (
+          !file.name.endsWith('.png') &&
+          !file.name.endsWith('.jpeg') &&
+          !file.name.endsWith('.jpg') &&
+          !file.name.endsWith('.bmp')
+        ) {
+          return;
+        }
+        await loadImage(file);
+      }
+    };
+
+    async function loadImage(file: File) {
       // Read file from computer
-      await blobToDataURL(file?.value as File)
+      await blobToDataURL(file)
         .then((result) => {
           imgSrc.value = result;
-          imageFilename.value = file.value?.name as string;
+          imageFilename.value = file.name;
           imageLoaded.value = true;
         })
         .catch(() => {
@@ -198,6 +222,7 @@ export default defineComponent({
             message: i18n.global.t('home.errorReading'),
             type: 'negative',
           });
+          imageFile.value = null;
         });
     }
 
@@ -222,6 +247,7 @@ export default defineComponent({
         message: i18n.global.t('home.errorLoading'),
         type: 'negative',
       });
+      imageFile.value = null;
     }
 
     function removeExtension(name: string, extension: string) {
@@ -348,12 +374,12 @@ export default defineComponent({
     }
 
     return {
-      tab: ref('from_computer'),
+      tab,
       imgSrc,
       loadImage,
       loadExampleImage,
       filePicker,
-      file,
+      imageFile,
       imageLoaded,
       loadingOK,
       loadingError,
@@ -364,6 +390,8 @@ export default defineComponent({
       elementsEnabled,
       flowsEnabled,
       ocrEnabled,
+      allowDrop,
+      drop,
     };
   },
 });
