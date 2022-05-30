@@ -169,7 +169,6 @@ export default defineComponent({
   setup() {
     const $q = useQuasar();
     const bpmnStore = useBpmnStore();
-    const tab = ref('from_computer');
     const filePicker: Ref<QFile | null> = ref(null);
     const imageFile: Ref<File | null> = ref(null);
     const imgSrc: Ref<string | ArrayBuffer | null | undefined> = ref(null);
@@ -196,14 +195,13 @@ export default defineComponent({
       if (files?.length > 0) {
         const file = files[0];
         if (
-          !file.name.endsWith('.png') &&
-          !file.name.endsWith('.jpeg') &&
-          !file.name.endsWith('.jpg') &&
-          !file.name.endsWith('.bmp')
+          file.name.endsWith('.png') ||
+          file.name.endsWith('.jpeg') ||
+          file.name.endsWith('.jpg') ||
+          file.name.endsWith('.bmp')
         ) {
-          return;
+          await loadImage(file);
         }
-        await loadImage(file);
       }
     };
 
@@ -374,7 +372,6 @@ export default defineComponent({
     }
 
     return {
-      tab,
       imgSrc,
       loadImage,
       loadExampleImage,
