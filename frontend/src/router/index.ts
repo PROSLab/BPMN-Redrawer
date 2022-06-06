@@ -1,7 +1,4 @@
-import { Notify } from 'quasar';
 import { route } from 'quasar/wrappers';
-import { i18n } from 'src/boot/i18n';
-import { useBpmnStore } from 'src/store/bpmnStore';
 import {
   createMemoryHistory,
   createRouter,
@@ -36,29 +33,6 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(
       process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE
     ),
-  });
-
-  Router.beforeEach((to, _from, next) => {
-    if (to.meta.auth) {
-      // If we are about to visit a page that needs authentication
-      // (e.g. history page), check that the user is logged in
-      const bpmnStore = useBpmnStore();
-      if (bpmnStore.logged) {
-        // If the user is logged in, visit the page
-        next();
-      } else {
-        // Otherwise notify the user about the error and
-        // redirect him to the home page
-        Notify.create({
-          message: i18n.global.t('router.noAuth'),
-          type: 'negative',
-        });
-        next({ name: 'home' });
-      }
-    } else {
-      // Visit the page without any checks if the route doesn't need them
-      next();
-    }
   });
 
   return Router;

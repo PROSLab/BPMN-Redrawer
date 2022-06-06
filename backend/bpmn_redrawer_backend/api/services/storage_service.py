@@ -1,15 +1,6 @@
 import os
-import tempfile
-
-from cv2 import cv2
-
-import time
 import numpy as np
-
-from spm2021_ram_backend.api.repositories.storage_repository import (
-    store_model,
-    download_image,
-)
+from cv2 import cv2
 
 
 def get_ocr_image(image_path: str):
@@ -59,16 +50,14 @@ def get_predict_image(image_path: str):
     return img
 
 
-def get_ocr_and_predict_images(image_name: str, token: str):
+def get_ocr_and_predict_images(path: str):
     """Service that returns the images for the OCR and Object/KeyPoints detection tasks. It retrieve the original
     image from Firebase storage given its name
 
     Parameters
     ----------
-    image_name: str
-        The name of the image stored in Firebase
-    token: str
-        The token of the user
+    path: str
+        The local path where the image is downloaded
 
     Returns
     -------
@@ -77,34 +66,8 @@ def get_ocr_and_predict_images(image_name: str, token: str):
 
     """
 
-    path = download_image(image_name, token)
     ocr_img = get_ocr_image(path)
     predict_img = get_predict_image(path)
     if ocr_img is not None and predict_img is not None:
         os.remove(path)
     return ocr_img, predict_img
-
-
-def store_bpmn_model(bpmn_str, token):
-    """Service that stores a bpmn model into Firebase given its string representation
-
-    Parameters
-    ----------
-    bpmn_str: str
-        The string of the bpmn model that has to be stored in Firebase
-    token: str
-        The token of the user
-
-    Returns
-    -------
-    str
-        The name/id of the stored model
-    """
-
-    t = int(time.time() * 1000)
-    model_url = f"model_{t}.bpmn"
-    with tempfile.TemporaryFile() as fp:
-        fp.write(bytearray(bpmn_str, encoding="utf-8"))
-        fp.seek(0)
-        store_model(model_url, fp, token)
-    return model_url

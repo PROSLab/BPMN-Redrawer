@@ -1,10 +1,10 @@
 import pytest
 from cv2 import cv2
 
-from spm2021_ram_backend.bpmn.bpmn_elements import Participant, Task
-from spm2021_ram_backend.bpmn.predictions import Text, ObjectPrediction
-from spm2021_ram_backend.api.services import ocr_service as os
-from spm2021_ram_backend.commons.utils import here
+from bpmn_redrawer_backend.bpmn.bpmn_elements import Participant, Task
+from bpmn_redrawer_backend.bpmn.predictions import Text, ObjectPrediction
+from bpmn_redrawer_backend.api.services import ocr_service as os
+from bpmn_redrawer_backend.commons.utils import here
 
 
 @pytest.fixture

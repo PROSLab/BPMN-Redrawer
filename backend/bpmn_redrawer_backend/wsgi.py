@@ -1,4 +1,4 @@
-from spm2021_ram_backend.app import create_app
+from bpmn_redrawer_backend.app import create_app
 
 app = create_app()
 

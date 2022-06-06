@@ -1,7 +1,5 @@
 import { boot } from 'quasar/wrappers';
 import axios, { AxiosInstance } from 'axios';
-import { useBpmnStore } from 'src/store/bpmnStore';
-import { auth } from 'src/components/utils/firebase-utils';
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -18,24 +16,6 @@ declare module '@vue/runtime-core' {
 const api = axios.create({
   baseURL: 'http://localhost:5000/api/v1',
 });
-
-// Intercept requests to backend API and add Firebase token
-// to the headers if user is logged in
-api.interceptors.request.use(
-  async (config) => {
-    const bpmnStore = useBpmnStore();
-    if (bpmnStore.logged) {
-      const token = await auth.currentUser?.getIdToken();
-      (config.headers as { Authorization: string })[
-        'Authorization'
-      ] = `Bearer ${token as string}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api

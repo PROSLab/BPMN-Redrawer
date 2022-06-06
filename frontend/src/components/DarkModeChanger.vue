@@ -1,8 +1,10 @@
 <template>
   <q-toggle
     class="q-mr-md"
-    :label="$t('main.dark')"
-    color="white"
+    color="black"
+    size="lg"
+    checked-icon="dark_mode"
+    unchecked-icon="light_mode"
     v-model="$q.dark.mode"
     @update:model-value="
       $q.dark.set($event);

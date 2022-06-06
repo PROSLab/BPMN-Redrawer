@@ -1,6 +1,5 @@
 import { mount } from '@cypress/vue';
 import EditorComponent from 'src/components/EditorComponent.vue';
-import { useBpmnStore } from 'src/store/bpmnStore';
 
 describe('EditorComponent', () => {
   it('has different buttons to load a diagram', () => {
@@ -28,43 +27,8 @@ describe('EditorComponent', () => {
   });
 
   it('opens the bpmn-js editor', () => {
-    const bpmnStore = useBpmnStore();
-
-    cy.fixture('test-model.bpmn')
-      .then((res) => {
-        bpmnStore.model = res as string;
-      })
-      .fixture('test-image.png')
-      .then((res) => {
-        bpmnStore.image = res as string;
-      });
-
     mount(EditorComponent);
 
     cy.get('.download-buttons').should('exist');
-  });
-
-  it('has the show image and the save model buttons', () => {
-    const bpmnStore = useBpmnStore();
-    const modelPath = 'test-model.bpmn';
-    const imagePath = 'test-image.png';
-
-    cy.fixture(modelPath)
-      .then((res) => {
-        bpmnStore.model = res as string;
-        bpmnStore.modelPath = modelPath;
-      })
-      .fixture(imagePath)
-      .then((res) => {
-        bpmnStore.image = res as string;
-        bpmnStore.imagePath = imagePath;
-      });
-
-    mount(EditorComponent);
-
-    ['.control-buttons', '.show-image', '.save-model'].forEach((b) => {
-      cy.get(b).should('exist');
-      cy.get(b).should('be.visible');
-    });
   });
 });

@@ -14,8 +14,8 @@ RUN pip install -U pip
 RUN pip install -r requirements.txt
 RUN pip install git+https://github.com/facebookresearch/detectron2.git@v0.6
 
-COPY spm2021_ram_backend spm2021_ram_backend/
+COPY bpmn_redrawer_backend bpmn_redrawer_backend/
 
-CMD gunicorn --bind 0.0.0.0:5000 --pythonpath spm2021_ram_backend wsgi:app
+CMD gunicorn --bind 0.0.0.0:5000 --pythonpath bpmn_redrawer_backend wsgi:app
 
 EXPOSE 5000

@@ -5,13 +5,13 @@ from detectron2.config import get_cfg
 from detectron2.engine import DefaultPredictor
 from numpy import ndarray
 
-from spm2021_ram_backend.bpmn.element_factories import CATEGORIES
-from spm2021_ram_backend.bpmn.predictions import (
+from bpmn_redrawer_backend.bpmn.element_factories import CATEGORIES
+from bpmn_redrawer_backend.bpmn.predictions import (
     ObjectPrediction,
     KeyPointPrediction,
 )
 
-from spm2021_ram_backend.commons.utils import here
+from bpmn_redrawer_backend.commons.utils import here
 
 
 class ObjectPredictor:

@@ -1,10 +1,10 @@
-from spm2021_ram_backend.bpmn.bpmn_elements import Participant, Task
-from spm2021_ram_backend.bpmn.bpmn_flows import SequenceFlow, MessageFlow
-from spm2021_ram_backend.bpmn.predictions import (
+from bpmn_redrawer_backend.bpmn.bpmn_elements import Participant, Task
+from bpmn_redrawer_backend.bpmn.bpmn_flows import SequenceFlow, MessageFlow
+from bpmn_redrawer_backend.bpmn.predictions import (
     ObjectPrediction,
     KeyPointPrediction,
 )
-from spm2021_ram_backend.api.services import convert_service as cs
+from bpmn_redrawer_backend.api.services import convert_service as cs
 
 
 def test_convert_object_predictions():

@@ -28,7 +28,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
-    boot: ['i18n', 'axios', 'pinia', 'config'],
+    boot: ['i18n', 'axios', 'config'],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: ['app.scss'],
@@ -141,9 +141,9 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: 'spm_frontend',
-        short_name: 'spm_frontend',
-        description: 'Frontend for SPM Project',
+        name: 'BPMN Redrawer',
+        short_name: 'bpmn_redrawer',
+        description: 'Frontend for BPMN Redrawer',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
@@ -206,7 +206,7 @@ module.exports = configure(function (ctx) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'spm_frontend',
+        appId: 'bpmn_redrawer',
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain

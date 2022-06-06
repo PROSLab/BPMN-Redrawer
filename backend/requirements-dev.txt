@@ -1,7 +1,6 @@
 marshmallow~=3.14.1
 flask~=2.0.2
 flask-restful
-flask-jwt-extended
 flask-cors~=3.0.10
 python-dotenv~=0.19.2
 passlib~=1.7.4
@@ -14,7 +13,6 @@ requests~=2.26.0
 opencv-python~=4.5.4.60
 pytest~=6.2.5
 pytest-cov~=3.0.0
-pyrebase4
 pytesseract~=0.3.8
 torch~=1.10.1
 torchvision~=0.11.2

@@ -1,6 +1,6 @@
 from jinja2 import Environment, BaseLoader
 
-from spm2021_ram_backend.bpmn.predictions import KeyPointPrediction
+from bpmn_redrawer_backend.bpmn.predictions import KeyPointPrediction
 
 
 class Flow:

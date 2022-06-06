@@ -3,7 +3,7 @@ from typing import List
 
 from jinja2 import Environment, BaseLoader
 
-from spm2021_ram_backend.bpmn.predictions import ObjectPrediction, Text
+from bpmn_redrawer_backend.bpmn.predictions import ObjectPrediction, Text
 
 
 class Element:

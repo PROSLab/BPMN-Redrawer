@@ -1,18 +1,8 @@
 import { boot } from 'quasar/wrappers';
 import { LocalStorage, Dark } from 'quasar';
-import { useBpmnStore } from 'src/store/bpmnStore';
-import { auth } from 'src/components/utils/firebase-utils';
-import { browserLocalPersistence } from 'firebase/auth';
 import { i18n } from 'src/boot/i18n';
 
-export default boot(async () => {
-  // Use LocalStorage persistence for Firebase
-  await auth.setPersistence(browserLocalPersistence);
-  if (auth.currentUser && auth.currentUser.emailVerified) {
-    // Re-log user
-    const bpmnStore = useBpmnStore();
-    bpmnStore.logged = true;
-  }
+export default boot(() => {
   if (LocalStorage.has('dark')) {
     try {
       // Set dark mode back to what it was last time

@@ -1,6 +1,6 @@
 import pytest
 
-from spm2021_ram_backend.bpmn.bpmn_elements import (
+from bpmn_redrawer_backend.bpmn.bpmn_elements import (
     Task,
     StartEvent,
     EndEvent,
@@ -10,7 +10,7 @@ from spm2021_ram_backend.bpmn.bpmn_elements import (
     IntermediateThrowEvent,
     IntermediateCatchEvent,
 )
-from spm2021_ram_backend.bpmn.predictions import ObjectPrediction, Text
+from bpmn_redrawer_backend.bpmn.predictions import ObjectPrediction, Text
 
 
 @pytest.fixture

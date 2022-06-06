@@ -1,12 +1,12 @@
 [run]
 include =
-        ./spm2021_ram_backend/api/*
-        ./spm2021_ram_backend/commons/utils.py
-        ./spm2021_ram_backend/bpmn/*
+        ./bpmn_redrawer_backend/api/*
+        ./bpmn_redrawer_backend/commons/utils.py
+        ./bpmn_redrawer_backend/bpmn/*
 omit =
         *tests*
         *__init__*
-        ./spm2021_ram_backend/api/views.py
+        ./bpmn_redrawer_backend/api/views.py
 
 [report]
 show_missing = True

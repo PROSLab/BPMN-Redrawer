@@ -1,5 +1,5 @@
 default_context:
-    project_name: "spm2021_ram_backend"
+    project_name: "bpmn_redrawer_backend"
     app_name: "bpmn_redrawer"
     python_version: "3.8"
     admin_user_username: "admin"

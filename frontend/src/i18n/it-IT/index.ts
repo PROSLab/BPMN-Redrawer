@@ -5,10 +5,10 @@ export default {
   home: {
     welcome: 'Benvenuti a BPMN Redrawer',
     description:
-      "Una semplice applicazione per convertire un'immagine PNG nel relativo modello BPMN",
-    project: 'Progetto SPM',
+      "Una semplice applicazione per convertire un'immagine nel relativo modello BPMN",
     university: 'Università di Camerino',
-    load: 'Carica immagine',
+    thumbnails: 'Anteprime',
+    batch: 'Upload in batch',
     convert: 'Converti',
     open: "Apri nell' Editor",
     converted: "L'immagine è stata convertita.",
@@ -19,41 +19,21 @@ export default {
     uploadingProgress: 'Caricando... {progress}%',
     errorUploading: 'Errore durante il caricamento: {error}',
     uploadCompleted: 'Caricamento completato',
-    waitBackend: 'Attendendo una risposta dal backend...',
+    waitBackend: 'Conversione in corso...',
     conversionCompleted: 'Conversione completata',
     errorConversion: 'Errore durante la conversione: {error}',
+    elements: 'Elementi',
+    flows: 'Flussi',
     examples: 'Esempi',
     examplesInstruction:
       "Clicca su uno dei modelli sottostanti per caricare l'immagine corrispondente",
-  },
-  main: {
-    dark: 'Modalità scura',
-    sign: 'Registrati / Accedi',
-  },
-  access: {
-    signin: 'Accedi',
-    signup: 'Registrati',
-    recover: 'Recupera Password',
-    recovery: 'Hai dimenticato la password?',
-    confirm: 'Conferma Password',
-    noAccount: 'Non hai un account?',
-    haveAccount: 'Hai già un account?',
-    info: 'Registrandoti, potrai accedere alla cronologia delle tue conversioni, modificare un modello già convertito e molto altro!',
-    notVerified: 'Email non verificata',
-    verifyTitle: 'Verifica il tuo account',
-    verifyMessage:
-      "Un'email di verifica è stata inviata a {email}. Per favora controlla la tua casella di posta per verificare il tuo account prima di accedere.",
-  },
-  password: {
-    title: 'Recupero Password',
-    message:
-      'Un link per il recupero della password è stato inviato a {email}. Una volta ricevuto, clicca il link per aprire una finestra dove puoi inserire una nuova password.',
   },
   editor: {
     drop: 'Rilascia',
     open: 'Apri',
     create: 'Crea',
     intro: 'un diagramma BPMN per iniziare.',
+    load: 'Carica immagine',
     exit: 'Sei sicuro di voler uscire? Tutti i progressi non salvati andranno persi.',
     errorSaveBPMN: 'Errore durante il salvataggio del modello come BPMN',
     errorSavePNG: 'Errore durante il salvataggio del modello come SVG',
@@ -62,33 +42,13 @@ export default {
     errorSaveChanges:
       'Errore durante il salvataggio delle modifiche al modello',
   },
-  profile: {
-    history: 'Cronologia',
-    delete: 'Cancella Account',
-    title: 'Cancella il tuo account',
-    message: 'Sei sicuro di voler cancellare il tuo account?',
-    deleted: 'Il tuo account è stato cancellato',
-  },
-  history: {
-    loading: 'Caricando la cronologia...',
-    title: 'Cronologia Conversioni',
-    conversions: 'Conversioni',
-    date: 'Data',
-    model: 'Modello',
-    image: 'Immagine',
-    open: "Apri nell' Editor",
-    noConversions: 'Ancora nessuna conversione effettuata...',
-    errorHistory:
-      'Errore durante il recupero della cronologia delle conversioni',
-    errorModelImage: 'Errore durante il recupero del modello/immagine',
-  },
-  validation: {
-    email: 'Fornisci un indirizzo email valido',
-    minLength: 'La Password deve essere lunga almeno 6 caratteri',
-    match: 'Password e Conferma Password devono corrispondere',
-  },
-  router: {
-    noAuth:
-      "Non hai il permesso di visualizzare questa pagina. Per favore effettua l'accesso.",
+  uploader: {
+    title: 'Immagine/i da convertire',
+    clearAll: 'Cancella tutto',
+    doneAll: 'Rimuovi file caricati',
+    pickFiles: 'Seleziona file',
+    uploadFiles: 'Carica file',
+    abortUpload: 'Interrompi upload',
+    download: 'Scarica modelli BPMN',
   },
 };

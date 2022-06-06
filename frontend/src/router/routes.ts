@@ -14,13 +14,7 @@ const routes: RouteRecordRaw[] = [
         path: 'editor',
         name: 'editor',
         component: () => import('pages/Editor.vue'),
-      },
-      {
-        path: 'history',
-        name: 'history',
-        component: () => import('pages/History.vue'),
-        // metadata to let the router know this route needs authentication
-        meta: { auth: true },
+        props: true,
       },
     ],
   },

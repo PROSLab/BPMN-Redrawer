@@ -6,8 +6,8 @@ describe('Landing', () => {
     cy.visit('/');
   });
 
-  it('includes "spm" in the title', () => {
-    cy.title().should('include', 'spm');
+  it('includes "BPMN" in the title', () => {
+    cy.title().should('include', 'BPMN');
   });
 
   it('shows a placeholder image', () => {

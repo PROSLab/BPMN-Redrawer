@@ -1,14 +1,14 @@
 import jinja2
 from typing import List, TYPE_CHECKING
 
-from spm2021_ram_backend.bpmn.bpmn_elements import Participant, Element, Diagram
-from spm2021_ram_backend.bpmn.bpmn_flows import Flow
-from spm2021_ram_backend.bpmn.element_factories import get_factory
-from spm2021_ram_backend.bpmn.flow_factories import get_keypoint_factory
-from spm2021_ram_backend.commons.utils import get_nearest_element, here
+from bpmn_redrawer_backend.bpmn.bpmn_elements import Participant, Element, Diagram
+from bpmn_redrawer_backend.bpmn.bpmn_flows import Flow
+from bpmn_redrawer_backend.bpmn.element_factories import get_factory
+from bpmn_redrawer_backend.bpmn.flow_factories import get_keypoint_factory
+from bpmn_redrawer_backend.commons.utils import get_nearest_element, here
 
 if TYPE_CHECKING:
-    from spm2021_ram_backend.bpmn.predictions import (
+    from bpmn_redrawer_backend.bpmn.predictions import (
         ObjectPrediction,
         KeyPointPrediction,
     )

@@ -1,6 +1,6 @@
 import pytest
 
-from spm2021_ram_backend.bpmn.predictions import (
+from bpmn_redrawer_backend.bpmn.predictions import (
     ObjectPrediction,
     KeyPointPrediction,
     Text,

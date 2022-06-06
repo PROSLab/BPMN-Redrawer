@@ -1,6 +1,6 @@
 from typing import Tuple, List, Union, Set
 
-from spm2021_ram_backend.bpmn.bpmn_elements import (
+from bpmn_redrawer_backend.bpmn.bpmn_elements import (
     Task,
     Participant,
     Element,
@@ -13,9 +13,9 @@ from spm2021_ram_backend.bpmn.bpmn_elements import (
     IntermediateThrowEvent,
     IntermediateCatchEvent,
 )
-from spm2021_ram_backend.bpmn.bpmn_flows import SequenceFlow, MessageFlow
-from spm2021_ram_backend.bpmn.predictions import ObjectPrediction
-from spm2021_ram_backend.commons.utils import (
+from bpmn_redrawer_backend.bpmn.bpmn_flows import SequenceFlow, MessageFlow
+from bpmn_redrawer_backend.bpmn.predictions import ObjectPrediction
+from bpmn_redrawer_backend.commons.utils import (
     generate_id,
     get_nearest_element,
 )
@@ -194,9 +194,6 @@ CATEGORIES = {
     2: "messageIntermediateCatchEvent",
     3: "inclusiveGateway",
     4: "errorEndEvent",
-    5: "serviceTask",
-    6: "subProcess",
-    7: "sendTask",
     8: "participant",
     9: "messageIntermediateThrowEvent",
     10: "endEvent",
@@ -214,45 +211,19 @@ CATEGORIES = {
     22: "complexGateway",
     23: "intermediateThrowEvent",
     24: "escalationIntermediateThrowEvent",
-    25: "userTask",
 }
 
 FACTORIES = {
-    "participant": ParticipantFactory(),
-    "startEvent": GenericElementFactory(StartEvent, "startEvent"),
-    "messageStartEvent": GenericElementFactory(StartEvent, "messageEventDefinition"),
-    "timerStartEvent": GenericElementFactory(StartEvent, "timerEventDefinition"),
-    "signalStartEvent": GenericElementFactory(StartEvent, "signalEventDefinition"),
-    "endEvent": GenericElementFactory(EndEvent, "endEvent"),
     "messageEndEvent": GenericElementFactory(EndEvent, "messageEventDefinition"),
     "errorEndEvent": GenericElementFactory(EndEvent, "errorEventDefinition"),
-    "escalationEndEvent": GenericElementFactory(EndEvent, "escalationEventDefinition"),
-    "terminateEndEvent": GenericElementFactory(EndEvent, "terminateEventDefinition"),
-    "intermediateThrowEvent": GenericElementFactory(
-        IntermediateThrowEvent, "intermediateThrowEvent"
-    ),
     "messageIntermediateThrowEvent": GenericElementFactory(
         IntermediateThrowEvent, "messageEventDefinition"
-    ),
-    "escalationIntermediateThrowEvent": GenericElementFactory(
-        IntermediateThrowEvent, "escalationEventDefinition"
-    ),
-    "messageIntermediateCatchEvent": GenericElementFactory(
-        IntermediateCatchEvent, "messageEventDefinition"
     ),
     "timerIntermediateCatchEvent": GenericElementFactory(
         IntermediateCatchEvent, "timerEventDefinition"
     ),
-    "inclusiveGateway": GenericElementFactory(Gateway, "inclusiveGateway"),
-    "parallelGateway": GenericElementFactory(Gateway, "parallelGateway"),
     "exclusiveGateway": GenericElementFactory(Gateway, "exclusiveGateway"),
     "eventBasedGateway": GenericElementFactory(Gateway, "eventBasedGateway"),
-    "complexGateway": GenericElementFactory(Gateway, "complexGateway"),
-    "task": GenericElementFactory(Task, "task"),
-    "sendTask": GenericElementFactory(Task, "sendTask"),
-    "subProcess": GenericElementFactory(Task, "subProcess"),
-    "serviceTask": GenericElementFactory(Task, "serviceTask"),
-    "userTask": GenericElementFactory(Task, "userTask"),
     "dataObjectReference": GenericElementFactory(Task, "dataObjectReference"),
 }
 

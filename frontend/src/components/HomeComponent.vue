@@ -7,67 +7,196 @@
       </div>
     </div>
 
-    <q-file
-      ref="filePicker"
-      style="display: none"
-      accept=".png, .jpeg, .jpg, .bmp"
-      v-model="imageFile"
-      @update:model-value="loadImage(imageFile)"
-    ></q-file>
-    <div class="q-pt-xl" style="text-align: center">
-      <q-btn
-        color="primary"
-        icon="upload_file"
-        :label="$t('home.load')"
-        @click="filePicker?.pickFiles()"
-      ></q-btn>
+    <div style="text-align: center">
+      <q-checkbox
+        class="q-pr-md"
+        v-model="thumbnailsEnabled"
+        :label="$t('home.thumbnails')"
+      ></q-checkbox>
+      <q-checkbox
+        class="q-pr-md"
+        v-model="batchEnabled"
+        :label="$t('home.batch')"
+      ></q-checkbox>
     </div>
-
-    <q-dialog v-model="conversionDialog" persistent>
-      <q-card>
-        <q-card-section class="row items-center">
-          <span class="q-ml-sm">{{ $t('home.converted') }}</span>
-          <q-space />
-          <q-btn icon="close" flat round dense v-close-popup />
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn
-            flat
-            icon="download"
-            label="Download"
-            color="primary"
-            @click="downloadModel('diagram.bpmn', conversionResult)"
-          />
-          <q-btn
-            flat
-            icon="arrow_forward"
-            :label="$t('home.open')"
-            color="primary"
-            :to="{ name: 'editor' }"
-          />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
 
     <div class="row justify-center q-pa-md" style="text-align: center">
       <div>
-        <q-img
-          style="border: 3px black solid; margin: auto"
-          sizes="(max-width: 400px) 400px, (max-height: 400px) 400px"
-          fit="contain"
-          position="50% 50%"
-          width="400px"
-          height="400px"
-          placeholder-src="../assets/default-placeholder.png"
-          no-spinner
-          :src="imgSrc"
-          @load="loadingOK"
-          @error="loadingError"
-          @dragover="allowDrop($event)"
-          @drop="drop($event)"
+        <q-uploader
+          ref="uploader"
+          style="
+            width: 600px;
+            max-width: 600px;
+            height: 400px;
+            max-height: 400px;
+          "
+          :url="api.defaults.baseURL + '/convert'"
+          :no-thumbnails="!thumbnailsEnabled"
+          :batch="batchEnabled"
+          bordered
+          multiple
+          accept=".png, .jpeg, .jpg, .bmp"
+          :form-fields="[
+            { name: 'elements', value: elementsEnabled },
+            { name: 'flows', value: flowsEnabled },
+            { name: 'ocr', value: ocrEnabled },
+          ]"
+          @added="(files) => onAdded(files)"
+          @removed="(files) => onRemoved(files)"
+          @uploaded="(info) => onUploaded(info)"
         >
-        </q-img>
+          <template v-slot:header="scope">
+            <div class="row no-wrap items-center q-pa-sm q-gutter-xs">
+              <q-btn
+                v-if="scope.queuedFiles.length > 0"
+                icon="clear_all"
+                @click="scope.removeQueuedFiles"
+                round
+                dense
+                flat
+              >
+                <q-tooltip>{{ $t('uploader.clearAll') }}</q-tooltip>
+              </q-btn>
+              <q-btn
+                v-if="scope.uploadedFiles.length > 0"
+                icon="done_all"
+                @click="scope.removeUploadedFiles"
+                round
+                dense
+                flat
+              >
+                <q-tooltip>{{ $t('uploader.doneAll') }}</q-tooltip>
+              </q-btn>
+              <q-btn
+                v-if="scope.uploadedFiles.length > 0"
+                icon="download"
+                @click="onDownloadModels()"
+                round
+                dense
+                flat
+              >
+                <q-tooltip>{{ $t('uploader.download') }}</q-tooltip>
+              </q-btn>
+              <q-spinner v-if="scope.isUploading" class="q-uploader__spinner" />
+              <div class="col">
+                <div class="q-uploader__title">{{ $t('uploader.title') }}</div>
+                <div class="q-uploader__subtitle">
+                  {{ scope.uploadSizeLabel }} / {{ scope.uploadProgressLabel }}
+                </div>
+              </div>
+              <q-btn
+                v-if="scope.canAddFiles"
+                type="a"
+                icon="add_box"
+                round
+                dense
+                flat
+              >
+                <q-uploader-add-trigger />
+                <q-tooltip>{{ $t('uploader.pickFiles') }}</q-tooltip>
+              </q-btn>
+              <q-btn
+                v-if="scope.canUpload"
+                icon="cloud_upload"
+                @click="scope.upload"
+                round
+                dense
+                flat
+              >
+                <q-tooltip>{{ $t('uploader.uploadFiles') }}</q-tooltip>
+              </q-btn>
+
+              <q-btn
+                v-if="scope.isUploading"
+                icon="clear"
+                @click="scope.abort"
+                round
+                dense
+                flat
+              >
+                <q-tooltip>{{ $t('uploader.abortUpload') }}</q-tooltip>
+              </q-btn>
+            </div>
+          </template>
+          <template v-slot:list="scope">
+            <q-list separator>
+              <q-item v-for="file in scope.files" :key="file.__key">
+                <q-item-section>
+                  <div
+                    :class="
+                      'q-uploader__file relative-position' +
+                      (thumbnailsEnabled && file.__img !== void 0
+                        ? ' q-uploader__file--img'
+                        : '') +
+                      (file.__status === 'failed'
+                        ? ' q-uploader__file--failed'
+                        : file.__status === 'uploaded'
+                        ? ' q-uploader__file--uploaded'
+                        : '')
+                    "
+                    :style="
+                      thumbnailsEnabled && file.__img !== void 0
+                        ? 'background-image: url(' + file.__img.src + ')'
+                        : null
+                    "
+                  >
+                    <div
+                      class="q-uploader__file-header row flex-center no-wrap"
+                    >
+                      <q-icon
+                        v-if="file.__status === 'failed'"
+                        class="q-uploader__file-status"
+                        name="warning"
+                        color="negative"
+                      >
+                      </q-icon>
+                      <div class="q-uploader__file-header-content col">
+                        <div class="q-uploader__title">{{ file.name }}</div>
+                        <div
+                          class="q-uploader__subtitle row items-center no-wrap"
+                        >
+                          {{ file.__sizeLabel + ' / ' + file.__progressLabel }}
+                        </div>
+                      </div>
+
+                      <q-circular-progress
+                        v-if="file.__status === 'uploading'"
+                        :value="file.__progress"
+                        :min="0"
+                        :max="1"
+                        :indeterminate="file.__progress === 0"
+                      >
+                      </q-circular-progress>
+                      <q-btn
+                        v-else
+                        round
+                        dense
+                        flat
+                        :icon="file.__status === 'uploaded' ? 'done' : 'clear'"
+                        @click="scope.removeFile(file)"
+                      >
+                      </q-btn>
+                    </div>
+                  </div>
+                </q-item-section>
+                <q-item-section side class="q-gutter-sm">
+                  <q-btn
+                    :disabled="results.get(file.name) == ''"
+                    icon="edit"
+                    color="primary"
+                    @click="onEdit(file)"
+                  ></q-btn>
+                  <q-btn
+                    :disabled="results.get(file.name) == ''"
+                    icon="download"
+                    color="primary"
+                    @click="onDownload(file)"
+                  ></q-btn>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </template>
+        </q-uploader>
       </div>
     </div>
 
@@ -75,13 +204,13 @@
       <q-checkbox
         class="q-pr-md"
         v-model="elementsEnabled"
-        label="Elements"
+        :label="$t('home.elements')"
       ></q-checkbox>
       <q-checkbox
         :disable="!elementsEnabled"
         class="q-pr-md"
         v-model="flowsEnabled"
-        label="Flows"
+        :label="$t('home.flows')"
       ></q-checkbox>
       <q-checkbox
         :disable="!elementsEnabled"
@@ -89,13 +218,6 @@
         v-model="ocrEnabled"
         label="OCR"
       ></q-checkbox>
-      <q-btn
-        :disable="!imageLoaded"
-        color="primary"
-        icon-right="arrow_forward"
-        :label="$t('home.convert')"
-        @click="convertImage()"
-      ></q-btn>
     </div>
   </div>
 
@@ -105,7 +227,7 @@
     <div class="row justify-evenly wrap">
       <div class="q-pa-sm" v-for="i in 3" :key="i">
         <q-img
-          style="border: 3px black solid; margin: auto"
+          :style="'border: 1px ' + ($q.dark.mode ? 'gray' : 'black') + ' solid'"
           sizes="(max-width: 400px) 400px, (max-height: 400px) 400px"
           fit="contain"
           position="50% 50%"
@@ -119,276 +241,132 @@
     </div>
   </div>
 
-  <div class="q-pt-md" style="margin: auto; text-align: center; width: 100%">
+  <div class="q-py-md" style="margin: auto; text-align: center; width: 100%">
     <div style="font-size: 18px">
       BPMN Redrawer
       <br />
-      {{ $t('home.project') }} @ {{ $t('home.university') }}
+      {{ $t('home.university') }}
       <br />
     </div>
     <div class="row justify-center">
-      <div
-        v-for="email in [
-          'alessandro.antinori@studenti.unicam.it',
-          'riccardo.coltrinari@studenti.unicam.it',
-          'marco.scarpetta@studenti.unicam.it',
-        ]"
-        :key="email"
-      >
-        <q-btn
-          icon="email"
-          flat
-          type="a"
-          :href="'mailto:' + email"
-          :label="email"
-          text-color="primary"
-        ></q-btn>
-      </div>
+      <q-img src="../assets/university-logo.png" width="173px" height="215px" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, Ref } from 'vue';
-import { QFile, useQuasar } from 'quasar';
-import { downloadModel } from 'src/components/utils/bpmn-utils';
-import {
-  storage,
-  fbStorageRef,
-  auth,
-} from 'src/components/utils/firebase-utils';
-import { uploadBytesResumable, UploadTask } from 'firebase/storage';
+import { exportFile, QUploader, useQuasar } from 'quasar';
 import { api } from 'src/boot/axios';
-import { useBpmnStore } from 'src/store/bpmnStore';
-import { blobToDataURL } from 'src/components/utils/image-utils';
+import JSZip from 'jszip';
+import { useRouter } from 'vue-router';
 import { i18n } from 'src/boot/i18n';
+import { blobToDataURL } from './utils/image-utils';
 
 export default defineComponent({
   name: 'HomeComponent',
 
   setup() {
     const $q = useQuasar();
-    const bpmnStore = useBpmnStore();
-    const filePicker: Ref<QFile | null> = ref(null);
-    const imageFile: Ref<File | null> = ref(null);
-    const imgSrc: Ref<string | ArrayBuffer | null | undefined> = ref(null);
-    const imageFilename = ref('');
-    const conversionDialog: Ref<boolean> = ref(false);
-    const conversionResult: Ref<string | null> = ref(null);
-    const imageLoaded = ref(false);
+    const router = useRouter();
+    const uploader: Ref<QUploader | null> = ref(null);
+    const thumbnailsEnabled = ref(true);
+    const batchEnabled = ref(true);
     const elementsEnabled = ref(true);
     const flowsEnabled = ref(true);
     const ocrEnabled = ref(true);
     interface ConversionResult {
-      model_id?: string;
-      image_id?: string;
-      xml: string;
+      image: string;
+      model: string;
+    }
+    const results: Ref<Map<string, string>> = ref(new Map([]));
+
+    async function loadExampleImage(i: number) {
+      uploader.value?.reset();
+      const imageName = `example${i}.png`;
+      const blob = await (
+        await fetch(
+          // eslint-disable-next-line @typescript-eslint/no-var-requires
+          require('../assets/' + imageName) as string
+        )
+      ).blob();
+      uploader.value?.addFiles([
+        new File([blob], imageName, { type: blob.type }),
+      ]);
     }
 
-    const allowDrop = (e: DragEvent) => {
-      e.preventDefault();
-    };
-
-    const drop = async (e: DragEvent) => {
-      e.preventDefault();
-      const files = (e.dataTransfer as DataTransfer).files;
-      if (files?.length > 0) {
-        const file = files[0];
-        if (
-          file.name.endsWith('.png') ||
-          file.name.endsWith('.jpeg') ||
-          file.name.endsWith('.jpg') ||
-          file.name.endsWith('.bmp')
-        ) {
-          await loadImage(file);
-        }
-      }
-    };
-
-    async function loadImage(file: File) {
-      // Read file from computer
-      await blobToDataURL(file)
-        .then((result) => {
-          imgSrc.value = result;
-          imageFilename.value = file.name;
-          imageLoaded.value = true;
-        })
-        .catch(() => {
-          imgSrc.value = null;
-          imageLoaded.value = false;
-          $q.notify({
-            message: i18n.global.t('home.errorReading'),
-            type: 'negative',
-          });
-          imageFile.value = null;
-        });
-    }
-
-    function loadExampleImage(i: number) {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      imgSrc.value = require(`../assets/example${i}.png`) as string;
-      imageLoaded.value = true;
-      imageFilename.value = `example${i}.png`;
-    }
-
-    function loadingOK() {
-      $q.notify({
-        message: i18n.global.t('home.loaded'),
-        type: 'positive',
+    function onAdded(files: File[]) {
+      files.forEach((f) => {
+        results.value.set(f.name, '');
       });
     }
 
-    function loadingError() {
-      imgSrc.value = null;
-      imageLoaded.value = false;
-      $q.notify({
-        message: i18n.global.t('home.errorLoading'),
-        type: 'negative',
+    function onRemoved(files: File[]) {
+      files.forEach((f) => {
+        results.value.delete(f.name);
       });
-      imageFile.value = null;
     }
 
-    function removeExtension(name: string, extension: string) {
-      return name.endsWith('.' + extension)
-        ? name.substring(0, name.lastIndexOf('.'))
-        : name;
-    }
-
-    function getExtension(name: string) {
-      return name.split('.').pop() as string;
-    }
-
-    async function convertImage() {
-      // Use imageName to send the path to backend for conversion
-      // Use fullImageName to store the image on Firebase Storage
-      const extension = getExtension(imageFilename.value);
-      const imageBaseName = removeExtension(imageFilename.value, extension);
-      const imageName =
-        imageBaseName +
-        '-at-' +
-        new Date().getTime().toString() +
-        '.' +
-        extension;
-      const fullImageName = bpmnStore.logged
-        ? `images/${auth.currentUser?.uid as string}/${imageName}`
-        : `anon/${imageName}`;
-
-      const storageRef = fbStorageRef(storage, fullImageName);
-
-      const uploadTask: UploadTask = uploadBytesResumable(
-        storageRef,
-        await (await fetch(imgSrc.value as string)).blob()
-      );
-
-      const uploadDialog = $q.dialog({
-        message: i18n.global.t('home.uploading'),
-        progress: true,
-        persistent: true,
-        ok: false,
+    async function onEdit(file: File) {
+      const image = await blobToDataURL(new Blob([file]));
+      const model = results.value.get(file.name);
+      $q.dialog({
+        message: i18n.global.t('editor.exit'),
         cancel: true,
+      }).onOk(() => {
+        void router.push({
+          name: 'editor',
+          params: { image: image, model: model },
+        });
       });
-      uploadDialog.onCancel(() => uploadTask.cancel());
+    }
 
-      uploadTask.on(
-        'state_changed',
-        (snapshot) => {
-          const progress = Math.floor(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          uploadDialog.update({
-            message: i18n.global.t('home.uploadingProgress', {
-              progress: progress,
-            }),
-          });
-        },
-        (error) => {
-          uploadDialog.hide();
-          $q.notify({
-            message: i18n.global.t('home.errorUploading', {
-              error: error.message,
-            }),
-            type: 'negative',
-          });
-        },
-        () => {
-          uploadDialog.hide();
-          $q.notify({
-            message: i18n.global.t('home.uploadCompleted'),
-            type: 'positive',
-          });
-
-          const resultDialog = $q.dialog({
-            message: i18n.global.t('home.waitBackend'),
-            progress: false,
-            persistent: true,
-            ok: false,
-            cancel: true,
-          });
-
-          // Call backend API for conversion
-          api
-            .post('/convert', {
-              imagePath: imageName,
-              elements: elementsEnabled.value,
-              flows: flowsEnabled.value,
-              ocr: ocrEnabled.value,
-            })
-            .then((res) => {
-              const resultData = res.data as ConversionResult;
-              conversionResult.value = resultData.xml;
-              // Update store according to whether the user is logged in or not
-              bpmnStore.$patch({
-                model: conversionResult.value,
-                image: imgSrc.value as string,
-                modelPath: resultData.model_id
-                  ? '/models/' +
-                    (auth.currentUser?.uid as string) +
-                    '/' +
-                    resultData.model_id
-                  : null,
-                imagePath: resultData.image_id
-                  ? '/images/' +
-                    (auth.currentUser?.uid as string) +
-                    '/' +
-                    resultData.image_id
-                  : null,
-              });
-              resultDialog.hide();
-              conversionDialog.value = true;
-              $q.notify({
-                message: i18n.global.t('home.conversionCompleted'),
-                type: 'positive',
-              });
-            })
-            .catch((err) => {
-              resultDialog.hide();
-              $q.notify({
-                message: i18n.global.t('home.errorConversion', { error: err }),
-                type: 'negative',
-              });
-            });
+    function onDownload(file: File) {
+      exportFile(
+        file.name.substring(0, file.name.lastIndexOf('.')) + '.bpmn',
+        results.value.get(file.name) as string,
+        {
+          mimeType: 'text/xml',
+          encoding: 'utf-8',
         }
       );
+    }
+
+    function onUploaded(info: { _: File[]; xhr: XMLHttpRequest }) {
+      (JSON.parse(info.xhr.response as string) as ConversionResult[]).forEach(
+        (cr) => {
+          results.value.set(cr.image, cr.model);
+        }
+      );
+    }
+
+    async function onDownloadModels() {
+      const zip = new JSZip();
+      [...results.value.entries()].forEach((e) => {
+        if (e[1] != '') {
+          zip.file(e[0] + '.bpmn', e[1]);
+        }
+      });
+      const res = await zip.generateAsync({ type: 'blob' });
+      exportFile('bpmn_models.zip', res);
     }
 
     return {
-      imgSrc,
-      loadImage,
+      api,
+      uploader,
+      results,
+      onAdded,
+      onRemoved,
+      onEdit,
+      onDownload,
+      onUploaded,
+      onDownloadModels,
       loadExampleImage,
-      filePicker,
-      imageFile,
-      imageLoaded,
-      loadingOK,
-      loadingError,
-      convertImage,
-      conversionDialog,
-      downloadModel,
-      conversionResult,
+      thumbnailsEnabled,
+      batchEnabled,
       elementsEnabled,
       flowsEnabled,
       ocrEnabled,
-      allowDrop,
-      drop,
     };
   },
 });

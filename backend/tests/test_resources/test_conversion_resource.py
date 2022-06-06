@@ -4,11 +4,11 @@ import unittest
 import pytest
 from requests import HTTPError
 
-from spm2021_ram_backend.app import create_app
-from spm2021_ram_backend.commons.utils import here
+from bpmn_redrawer_backend.app import create_app
+from bpmn_redrawer_backend.commons.utils import here
 from unittest import mock
 
-from spm2021_ram_backend.firebase.firebase import auth
+from bpmn_redrawer_backend.firebase.firebase import auth
 
 
 @pytest.fixture
@@ -25,18 +25,18 @@ def token():
 
 @unittest.SkipTest
 @mock.patch(
-    "spm2021_ram_backend.api.services.storage_service.download_image",
+    "bpmn_redrawer_backend.api.services.storage_service.download_image",
     return_value=here("../fixtures/img7.png"),
 )
 @mock.patch(
-    "spm2021_ram_backend.api.services.storage_service.os.remove", return_value=None
+    "bpmn_redrawer_backend.api.services.storage_service.os.remove", return_value=None
 )
 @mock.patch(
-    "spm2021_ram_backend.api.services.storage_service.store_bpmn_model",
+    "bpmn_redrawer_backend.api.services.storage_service.store_bpmn_model",
     return_value="model_7",
 )
 @mock.patch(
-    "spm2021_ram_backend.api.services.database_service.store_conversion",
+    "bpmn_redrawer_backend.api.services.database_service.store_conversion",
     return_value=None,
 )
 def test_post_conversion(mock_down, mock_rem, mock_bpmn, mock_conv, client):
@@ -76,18 +76,18 @@ def test_post_conversion(mock_down, mock_rem, mock_bpmn, mock_conv, client):
 
 @unittest.SkipTest
 @mock.patch(
-    "spm2021_ram_backend.api.services.storage_service.download_image",
+    "bpmn_redrawer_backend.api.services.storage_service.download_image",
     return_value=here("../fixtures/img7.png"),
 )
 @mock.patch(
-    "spm2021_ram_backend.api.services.storage_service.os.remove", return_value=None
+    "bpmn_redrawer_backend.api.services.storage_service.os.remove", return_value=None
 )
 @mock.patch(
-    "spm2021_ram_backend.api.services.storage_service.store_bpmn_model",
+    "bpmn_redrawer_backend.api.services.storage_service.store_bpmn_model",
     return_value="model_7",
 )
 @mock.patch(
-    "spm2021_ram_backend.api.services.database_service.store_conversion",
+    "bpmn_redrawer_backend.api.services.database_service.store_conversion",
     return_value=None,
 )
 def test_post_conversion_token(
@@ -138,18 +138,18 @@ def http_error():
 
 
 @mock.patch(
-    "spm2021_ram_backend.api.services.storage_service.download_image",
+    "bpmn_redrawer_backend.api.services.storage_service.download_image",
     return_value=here("../fixtures/img7.png"),
 )
 @mock.patch(
-    "spm2021_ram_backend.api.services.storage_service.os.remove", return_value=None
+    "bpmn_redrawer_backend.api.services.storage_service.os.remove", return_value=None
 )
 @mock.patch(
-    "spm2021_ram_backend.api.services.storage_service.store_bpmn_model",
+    "bpmn_redrawer_backend.api.services.storage_service.store_bpmn_model",
     side_effect=http_error(),
 )
 @mock.patch(
-    "spm2021_ram_backend.api.services.database_service.store_conversion",
+    "bpmn_redrawer_backend.api.services.database_service.store_conversion",
     side_effect=http_error(),
 )
 def test_post_conversion_error(

@@ -1,25 +1,7 @@
 <template>
-  <div
-    style="
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      padding: 0;
-      margin: 0;
-      border: 0;
-    "
-    class="fill-height fill-width"
-    ref="viewerDiv"
-  >
+  <div class="absolute-full" ref="viewerDiv">
     <viewer
-      style="
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        padding: 0;
-        margin: 0;
-        border: 0;
-      "
+      class="absolute-full viewer"
       :options="{
         inline: true,
         button: false,
@@ -36,7 +18,6 @@
         keyboard: false,
       }"
       :images="images"
-      class="viewer fill-height fill-width"
       ref="viewer"
     >
       <template #default="scope">
@@ -50,6 +31,24 @@
     </viewer>
 
     <q-resize-observer debounce="250" @resize="resize()"></q-resize-observer>
+
+    <div>
+      <q-file
+        ref="filePicker"
+        style="display: none"
+        accept=".png, .jpeg, .jpg, .bmp"
+        v-model="file"
+        @update:model-value="loadImage()"
+      ></q-file>
+      <div class="row justify-center q-pt-md">
+        <q-btn
+          outline
+          icon="file_upload"
+          :label="$t('editor.load')"
+          @click="filePicker.pickFiles()"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -57,21 +56,38 @@
 import { defineComponent, ref, Ref } from 'vue';
 import 'viewerjs/dist/viewer.css';
 import { component as Viewer } from 'v-viewer';
-import { useBpmnStore } from 'src/store/bpmnStore';
+import { QFile } from 'quasar';
+import { blobToDataURL } from './utils/image-utils';
 
 export default defineComponent({
   name: 'ViewerComponent',
 
   components: { Viewer },
 
-  setup() {
-    const bpmnStore = useBpmnStore();
+  props: {
+    image: {
+      type: String,
+      required: false,
+    },
+  },
+
+  setup(props) {
     const viewerDiv: Ref<HTMLElement | null> = ref(null);
+    const filePicker: Ref<QFile | null> = ref(null);
+    const file: Ref<File | null> = ref(null);
+    const images = ref([props.image]);
+
+    const loadImage = async () => {
+      const image = await blobToDataURL(new Blob([file.value as File]));
+      images.value = [image];
+    };
 
     return {
-      images: [bpmnStore.image],
-
+      filePicker,
+      file,
+      images,
       viewerDiv,
+      loadImage,
 
       // Handle resize
       resize() {

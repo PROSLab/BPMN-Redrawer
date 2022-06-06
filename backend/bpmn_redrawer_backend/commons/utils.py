@@ -5,7 +5,7 @@ import random
 import string
 from typing import List, Union
 
-from spm2021_ram_backend.bpmn.bpmn_elements import Element, Participant
+from bpmn_redrawer_backend.bpmn.bpmn_elements import Element, Participant
 
 
 def generate_id(prefix: str) -> str:

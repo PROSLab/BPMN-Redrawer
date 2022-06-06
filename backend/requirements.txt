@@ -1,7 +1,6 @@
 marshmallow~=3.14.1
 flask~=2.0.2
 flask-restful
-flask-jwt-extended
 flask-cors~=3.0.10
 python-dotenv~=0.19.2
 passlib~=1.7.4
@@ -10,7 +9,6 @@ numpy~=1.21.4
 requests~=2.26.0
 opencv-python-headless~=4.5.4.60
 gunicorn~=20.1.0
-pyrebase4~=4.5.0
 pytesseract~=0.3.8
 torch~=1.10.1
 torchvision~=0.11.2

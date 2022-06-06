@@ -1548,13 +1548,6 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@pinia/testing@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@pinia/testing/-/testing-0.0.9.tgz#6e4f7bbca7c307988a2efa83ac2afd971e708b35"
-  integrity sha512-JG+th+BENR89/7vpRxafDApU56AECZ9m+THd8IKsgomyRXaiRRdwt0BLbjStTkksnoNZfZBCz5NszykyNxz/sQ==
-  dependencies:
-    vue-demi "*"
-
 "@polka/url@^1.0.0-next.20":
   version "1.0.0-next.21"
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
@@ -2093,7 +2086,7 @@
     "@vue/compiler-dom" "3.2.30"
     "@vue/shared" "3.2.30"
 
-"@vue/devtools-api@^6.0.0-beta.18", "@vue/devtools-api@^6.0.0-beta.21", "@vue/devtools-api@^6.0.0-beta.7":
+"@vue/devtools-api@^6.0.0-beta.18", "@vue/devtools-api@^6.0.0-beta.7":
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.0.1.tgz#c198200b9f84c7b6f7c4976b0206cbe1e7f61dc9"
   integrity sha512-V2BKGa9pHf/sY2oBUr4uO8yF5MtgL2X96uJq2cBPxPqEUEkLfhJrbpU7t34JRjnanp2tkDJQrQsrsoMltHnFNQ==
@@ -2150,20 +2143,6 @@
   version "2.0.0-rc.17"
   resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-2.0.0-rc.17.tgz#e6dcf5b5bd3ae23595bdb154b9b578ebcdffd698"
   integrity sha512-7LHZKsFRV/HqDoMVY+cJamFzgHgsrmQFalROHC5FMWrzPzd+utG5e11krj1tVsnxYufGA2ABShX4nlcHXED+zQ==
-
-"@vuelidate/core@^2.0.0-alpha.34":
-  version "2.0.0-alpha.34"
-  resolved "https://registry.yarnpkg.com/@vuelidate/core/-/core-2.0.0-alpha.34.tgz#4a2ce2ae18c8ffadb76b296b2c7c0e10a2f48a37"
-  integrity sha512-8SHViBA+bBaXGH8UwcdGG7vEQ8mG8rhtsddJiq9Abz9YvzWxFxd8spAhe9ggfCtyRuvwCCpPbxx63NOGThVZkQ==
-  dependencies:
-    vue-demi "^0.12.0"
-
-"@vuelidate/validators@^2.0.0-alpha.26":
-  version "2.0.0-alpha.26"
-  resolved "https://registry.yarnpkg.com/@vuelidate/validators/-/validators-2.0.0-alpha.26.tgz#dbea8d44b7607ac0b4dced36ea3e4641f1617942"
-  integrity sha512-O53AU/dGMMOEPMC6bqhs9JvJAz03z0lLxIDq1tL8bWZylzRWeuF9a2sERxy82t2MnQ+ag15tUpTFpTbaYBm9tg==
-  dependencies:
-    vue-demi "^0.12.0"
 
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"
@@ -5087,6 +5066,16 @@ jsprim@^2.0.2:
     json-schema "0.4.0"
     verror "1.10.0"
 
+jszip@^3.10.0:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/jszip/-/jszip-3.10.0.tgz#faf3db2b4b8515425e34effcdbb086750a346061"
+  integrity sha512-LDfVtOLtOxb9RXkYOwPyNBTQDL4eUbqahtoY6x07GiDJHwSYvn8sHHIw8wINImV3MqbMNve2gSuM1DDqEKk09Q==
+  dependencies:
+    lie "~3.3.0"
+    pako "~1.0.2"
+    readable-stream "~2.3.6"
+    setimmediate "^1.0.5"
+
 jszip@^3.6.0:
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/jszip/-/jszip-3.7.1.tgz#bd63401221c15625a1228c556ca8a68da6fda3d9"
@@ -5944,14 +5933,6 @@ pify@^2.2.0:
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
   integrity sha1-7RQaasBDqEnqWISY59yosVMw6Qw=
 
-pinia@^2.0.11:
-  version "2.0.11"
-  resolved "https://registry.yarnpkg.com/pinia/-/pinia-2.0.11.tgz#ff03c714f5e5f16207280a4fc2eab01f3701ee2b"
-  integrity sha512-JzcmnMqu28PNWOjDgEDK6fTrIzX8eQZKPPKvu/fpHdpXARUj1xeVdFi3YFIMOWswqaBd589cpmAMdSSTryI9iw==
-  dependencies:
-    "@vue/devtools-api" "^6.0.0-beta.21"
-    vue-demi "*"
-
 pkg-dir@^4.1.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/pkg-dir/-/pkg-dir-4.2.0.tgz#f099133df7ede422e81d1d8448270eeb3e4261f3"
@@ -6788,6 +6769,11 @@ set-immediate-shim@~1.0.1:
   resolved "https://registry.yarnpkg.com/set-immediate-shim/-/set-immediate-shim-1.0.1.tgz#4b2b1b27eb808a9f8dcc481a58e5e56f599f3f61"
   integrity sha1-SysbJ+uAip+NzEgaWOXlb1mfP2E=
 
+setimmediate@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/setimmediate/-/setimmediate-1.0.5.tgz#290cbb232e306942d7d7ea9b83732ab7856f8285"
+  integrity sha1-KQy7Iy4waULX1+qbg3Mqt4VvgoU=
+
 setprototypeof@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.1.0.tgz#d0bd85536887b6fe7c0d818cb962d9d91c54e656"
@@ -7416,11 +7402,6 @@ viewerjs@^1.9.0:
   version "1.10.3"
   resolved "https://registry.yarnpkg.com/viewerjs/-/viewerjs-1.10.3.tgz#b400c769aa22e3891962b65b0ae93399a92d8d69"
   integrity sha512-X6dSO8aa6+Majmhx2GQcDSOzLClmj9zjsa89lGyG3cKGM2ca8rpGwL+iSRaAtRZalL5+VQ9osg+zfYVcAUyH8g==
-
-vue-demi@*, vue-demi@^0.12.0:
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.12.1.tgz#f7e18efbecffd11ab069d1472d7a06e319b4174c"
-  integrity sha512-QL3ny+wX8c6Xm1/EZylbgzdoDolye+VpCXRhI2hug9dJTP3OUJ3lmiKN3CsVV3mOJKwFi0nsstbgob0vG7aoIw==
 
 vue-eslint-parser@^7.10.0:
   version "7.11.0"

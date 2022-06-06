@@ -33,7 +33,6 @@ import { Notify, LocalStorage, Dark } from 'quasar';
 import { i18n } from 'src/boot/i18n';
 import { createRouter, createWebHashHistory } from 'vue-router';
 import routes from 'src/router/routes';
-import { setActivePinia, createPinia, Pinia } from 'pinia';
 
 // You can modify the global config here for all tests or pass in the configuration per test
 // For example use the actual i18n instance or mock it
@@ -44,7 +43,6 @@ config.global.plugins.push(
     history: createWebHashHistory(),
   })
 );
-config.global.plugins.push(setActivePinia(createPinia()) as Pinia);
 
 // config.global.mocks = {
 //   $t: () => '',

@@ -1,5 +1,5 @@
-from spm2021_ram_backend.bpmn.bpmn_flows import SequenceFlow, MessageFlow
-from spm2021_ram_backend.bpmn.predictions import KeyPointPrediction
+from bpmn_redrawer_backend.bpmn.bpmn_flows import SequenceFlow, MessageFlow
+from bpmn_redrawer_backend.bpmn.predictions import KeyPointPrediction
 
 
 def test_sequence_flow():

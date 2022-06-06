@@ -1,14 +1,5 @@
 <template>
-  <div
-    style="
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      padding: 0;
-      margin: 0;
-      border: 0;
-    "
-  >
+  <div class="absolute-full">
     <div class="content" id="js-drop-zone">
       <div class="message intro">
         <div class="note">
@@ -24,7 +15,7 @@
             style="display: none"
             accept=".bpmn"
             v-model="pickedFile"
-            @update:model-value="uploadDiagram()"
+            @update:model-value="uploadDiagram(pickedFile)"
           ></q-file>
           <q-btn
             class="open-button"
@@ -58,7 +49,21 @@
     </div>
 
     <ul class="download-buttons" v-if="successfulLoadBPMN">
-      <li>Download</li>
+      <q-file
+        ref="bpmnFilePicker"
+        style="display: none"
+        accept=".bpmn"
+        v-model="bpmnFile"
+        @update:model-value="uploadDiagram(bpmnFile)"
+      ></q-file>
+      <li>
+        <q-btn
+          icon="upload"
+          label="BPMN"
+          outline
+          @click="bpmnFilePicker?.pickFiles()"
+        />
+      </li>
       <li>
         <q-btn icon="download" label="BPMN" outline @click="downloadAsBPMN" />
       </li>
@@ -66,54 +71,34 @@
         <q-btn icon="download" label="SVG" outline @click="downloadAsSVG" />
       </li>
     </ul>
-
-    <ul class="exit-button" v-if="successfulLoadBPMN">
-      <q-btn icon="exit_to_app" size="16px" :to="{ name: 'home' }" flat />
-    </ul>
-
-    <div class="control-buttons row">
-      <q-btn
-        v-if="bpmnStore.image"
-        class="show-image"
-        :icon="bpmnStore.showImage ? 'image_not_supported' : 'image'"
-        size="16px"
-        flat
-        @click="bpmnStore.showImage = !bpmnStore.showImage"
-      />
-      <q-separator size="2px" vertical></q-separator>
-      <q-btn
-        v-if="bpmnStore.modelPath && bpmnStore.imagePath"
-        class="save-model"
-        icon="save"
-        size="16px"
-        flat
-        @click="saveModifiedModel()"
-      />
-    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, Ref, onUnmounted } from 'vue';
-import { debounce, useQuasar, QFile } from 'quasar';
+import { useQuasar, QFile, exportFile } from 'quasar';
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
 import Modeler from 'bpmn-js/lib/Modeler';
-import { downloadModel, sampleDiagram } from 'src/components/utils/bpmn-utils';
-import { useBpmnStore } from 'src/store/bpmnStore';
 import { onBeforeRouteLeave } from 'vue-router';
-import { storage, fbStorageRef } from 'src/components/utils/firebase-utils';
-import { uploadBytes } from 'firebase/storage';
 import { i18n } from 'src/boot/i18n';
 
 export default defineComponent({
   name: 'EditorComponent',
 
-  setup() {
+  props: {
+    model: {
+      type: String,
+      required: false,
+    },
+  },
+
+  setup(props) {
     const $q = useQuasar();
-    const bpmnStore = useBpmnStore();
     const filePicker: Ref<QFile | null> = ref(null);
     const pickedFile: Ref<File | null> = ref(null);
+    const bpmnFilePicker: Ref<QFile | null> = ref(null);
+    const bpmnFile: Ref<File | null> = ref(null);
     const successfulLoadBPMN = ref(false);
 
     let container: HTMLElement | null;
@@ -178,12 +163,6 @@ export default defineComponent({
         cancel: true,
       })
         .onOk(() => {
-          bpmnStore.$patch({
-            model: null,
-            image: null,
-            modelPath: null,
-            imagePath: null,
-          });
           next();
         })
         .onCancel(() => next(false));
@@ -196,15 +175,6 @@ export default defineComponent({
         // Enable bpmn-js keyboard shortcuts
         keyboard: { bindTo: document },
       });
-      // Save changes to bpmn model
-      modeler.on(
-        'commandStack.changed',
-        debounce(() => {
-          void modeler.saveXML({ format: true }).then((data) => {
-            bpmnStore.model = data.xml;
-          });
-        }, 500)
-      );
       if (!window.FileList || !window.FileReader) {
         $q.notify({
           message:
@@ -215,8 +185,8 @@ export default defineComponent({
         registerFileDrop(openDiagram);
       }
 
-      if (bpmnStore.model) {
-        void openDiagram(bpmnStore.model);
+      if (props.model) {
+        void openDiagram(props.model);
       }
     });
 
@@ -229,13 +199,14 @@ export default defineComponent({
     return {
       filePicker,
       pickedFile,
+      bpmnFilePicker,
+      bpmnFile,
       successfulLoadBPMN,
-      bpmnStore,
 
       async downloadAsBPMN() {
         try {
           const { xml } = await modeler.saveXML({ format: true });
-          downloadModel('diagram.bpmn', xml);
+          exportFile('diagram.bpmn', xml);
         } catch (err) {
           $q.notify({
             message: i18n.global.t('editor.errorSaveBPMN'),
@@ -247,7 +218,7 @@ export default defineComponent({
       async downloadAsSVG() {
         try {
           const { svg } = await modeler.saveSVG();
-          downloadModel('diagram.svg', svg);
+          exportFile('diagram.svg', svg);
         } catch (err) {
           $q.notify({
             message: i18n.global.t('editor.errorSaveSVG'),
@@ -258,56 +229,24 @@ export default defineComponent({
 
       // When creating a new diagram, just open the default one
       createNewDiagram() {
+        const sampleDiagram =
+          '<?xml version="1.0" encoding="UTF-8"?><bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="sample-diagram" targetNamespace="http://bpmn.io/schema/bpmn"><bpmn2:process id="Process_1" isExecutable="false"><bpmn2:startEvent id="StartEvent_1" /></bpmn2:process><bpmndi:BPMNDiagram id="BPMNDiagram_1"><bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1"><bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1"><dc:Bounds height="36.0" width="36.0" x="412.0" y="240.0" /></bpmndi:BPMNShape></bpmndi:BPMNPlane></bpmndi:BPMNDiagram></bpmn2:definitions>';
         void openDiagram(sampleDiagram);
       },
 
-      uploadDiagram() {
-        const fileValue = pickedFile?.value;
+      uploadDiagram(file: File) {
+        console.log(file);
         const reader = new FileReader();
-        // Accept only .bpmn files
-        if (fileValue?.name.match(/\.bpmn$/i)) {
-          reader.onload = (res) => {
-            void openDiagram(res.target?.result as string);
-          };
-          reader.onerror = () => {
-            $q.notify({
-              message: i18n.global.t('editor.errorUpload'),
-              type: 'negative',
-            });
-          };
-          reader.readAsText(fileValue, 'utf8');
-        }
-      },
-
-      saveModifiedModel() {
-        const modelStorageRef = fbStorageRef(
-          storage,
-          bpmnStore.modelPath as string
-        );
-        modeler
-          .saveXML({ format: true })
-          .then((xmlRes) => {
-            // Overwrite the model on Firebase
-            uploadBytes(modelStorageRef, new TextEncoder().encode(xmlRes.xml))
-              .then(() => {
-                $q.notify({
-                  message: i18n.global.t('editor.savedChanges'),
-                  type: 'positive',
-                });
-              })
-              .catch(() => {
-                $q.notify({
-                  message: i18n.global.t('editor.errorSaveChanges'),
-                  type: 'negative',
-                });
-              });
-          })
-          .catch(() => {
-            $q.notify({
-              message: i18n.global.t('editor.errorSaveChanges'),
-              type: 'negative',
-            });
+        reader.onload = (res) => {
+          void openDiagram(res.target?.result as string);
+        };
+        reader.onerror = () => {
+          $q.notify({
+            message: i18n.global.t('editor.errorUpload'),
+            type: 'negative',
           });
+        };
+        reader.readAsText(file, 'utf8');
       },
     };
   },
@@ -367,23 +306,6 @@ a:link {
 }
 .content.with-diagram .canvas {
   visibility: visible;
-}
-.control-buttons {
-  position: absolute;
-  transform: translateX(-50%);
-  top: 10px;
-  left: 50%;
-  border: 1px solid #cccccc;
-  border-radius: 2px;
-}
-.exit-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 0;
-  margin: 0;
-  border: 1px solid #cccccc;
-  border-radius: 2px;
 }
 .download-buttons {
   position: absolute;

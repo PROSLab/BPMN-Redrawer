@@ -1,6 +1,6 @@
-from spm2021_ram_backend.bpmn.bpmn_elements import Element
-from spm2021_ram_backend.bpmn.predictions import ObjectPrediction
-from spm2021_ram_backend.commons import utils
+from bpmn_redrawer_backend.bpmn.bpmn_elements import Element
+from bpmn_redrawer_backend.bpmn.predictions import ObjectPrediction
+from bpmn_redrawer_backend.commons import utils
 
 
 def test_generate_id():

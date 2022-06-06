@@ -1,7 +1,7 @@
-from spm2021_ram_backend.bpmn import flow_factories as ff
-from spm2021_ram_backend.bpmn.bpmn_flows import SequenceFlow, MessageFlow
-from spm2021_ram_backend.bpmn.flow_factories import GenericFlowFactory
-from spm2021_ram_backend.bpmn.predictions import KeyPointPrediction
+from bpmn_redrawer_backend.bpmn import flow_factories as ff
+from bpmn_redrawer_backend.bpmn.bpmn_flows import SequenceFlow, MessageFlow
+from bpmn_redrawer_backend.bpmn.flow_factories import GenericFlowFactory
+from bpmn_redrawer_backend.bpmn.predictions import KeyPointPrediction
 
 
 def test_get_keypoint_factory():

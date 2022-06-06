@@ -1,6 +1,6 @@
-from spm2021_ram_backend.bpmn.bpmn_flows import Flow, SequenceFlow, MessageFlow
-from spm2021_ram_backend.bpmn.predictions import KeyPointPrediction
-from spm2021_ram_backend.commons.utils import generate_id
+from bpmn_redrawer_backend.bpmn.bpmn_flows import Flow, SequenceFlow, MessageFlow
+from bpmn_redrawer_backend.bpmn.predictions import KeyPointPrediction
+from bpmn_redrawer_backend.commons.utils import generate_id
 
 
 class FlowFactory:

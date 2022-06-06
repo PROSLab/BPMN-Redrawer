@@ -91,8 +91,8 @@ ENV/
 # PyCharm folder
 .idea
 
-spm2021_ram_backend/detectron_model/*
-!spm2021_ram_backend/detectron_model/.gitkeep
+bpmn_redrawer_backend/detectron_model/*
+!bpmn_redrawer_backend/detectron_model/.gitkeep
 
-spm2021_ram_backend/temp_files/*
-!spm2021_ram_backend/temp_files/.gitkeep
+bpmn_redrawer_backend/temp_files/*
+!bpmn_redrawer_backend/temp_files/.gitkeep

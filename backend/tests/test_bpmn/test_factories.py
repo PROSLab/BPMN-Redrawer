@@ -1,16 +1,16 @@
-from spm2021_ram_backend.bpmn import element_factories as f
-from spm2021_ram_backend.bpmn.bpmn_elements import (
+from bpmn_redrawer_backend.bpmn import element_factories as f
+from bpmn_redrawer_backend.bpmn.bpmn_elements import (
     StartEvent,
     Gateway,
     Participant,
     Task, Process,
 )
-from spm2021_ram_backend.bpmn.bpmn_flows import MessageFlow
-from spm2021_ram_backend.bpmn.element_factories import (
+from bpmn_redrawer_backend.bpmn.bpmn_flows import MessageFlow
+from bpmn_redrawer_backend.bpmn.element_factories import (
     ParticipantFactory,
     GenericElementFactory, extend_participants, DiagramFactory,
 )
-from spm2021_ram_backend.bpmn.predictions import ObjectPrediction, KeyPointPrediction
+from bpmn_redrawer_backend.bpmn.predictions import ObjectPrediction, KeyPointPrediction
 
 
 def test_diagram_factory():

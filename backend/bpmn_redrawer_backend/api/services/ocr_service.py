@@ -1,11 +1,9 @@
-from typing import List
-
 import pytesseract
+from typing import List
 from numpy import ndarray
-
-from spm2021_ram_backend.bpmn.bpmn_elements import Participant, Element
-from spm2021_ram_backend.bpmn.predictions import Text
-from spm2021_ram_backend.commons.utils import get_nearest_element
+from bpmn_redrawer_backend.bpmn.bpmn_elements import Participant, Element
+from bpmn_redrawer_backend.bpmn.predictions import Text
+from bpmn_redrawer_backend.commons.utils import get_nearest_element
 
 
 def get_text_from_png(img: ndarray) -> List[Text]:
