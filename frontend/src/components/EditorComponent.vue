@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute-full">
+  <div class="absolute-full" @dragover="allowDrop($event)" @drop="drop($event)">
     <div class="content" id="js-drop-zone">
       <div class="message intro">
         <div class="note">
@@ -192,11 +192,26 @@ export default defineComponent({
 
     // Detach the bpmn-js modeler from parent when changing page
     onUnmounted(() => {
-      modeler.off('commandStack.changed');
       modeler.detach();
     });
 
+    const allowDrop = (e: DragEvent) => {
+      e.preventDefault();
+    };
+
+    const drop = async (e: DragEvent) => {
+      e.preventDefault();
+      const files = e.dataTransfer?.files;
+      if (files?.length == 1) {
+        if (files[0].name.endsWith('.bpmn')) {
+          await openDiagram(await files[0].text());
+        }
+      }
+    };
+
     return {
+      allowDrop,
+      drop,
       filePicker,
       pickedFile,
       bpmnFilePicker,
@@ -235,7 +250,6 @@ export default defineComponent({
       },
 
       uploadDiagram(file: File) {
-        console.log(file);
         const reader = new FileReader();
         reader.onload = (res) => {
           void openDiagram(res.target?.result as string);

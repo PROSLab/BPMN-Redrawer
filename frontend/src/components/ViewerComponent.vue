@@ -1,5 +1,10 @@
 <template>
-  <div class="absolute-full" ref="viewerDiv">
+  <div
+    class="absolute-full"
+    ref="viewerDiv"
+    @dragover="allowDrop($event)"
+    @drop="drop($event)"
+  >
     <viewer
       class="absolute-full viewer"
       :options="{
@@ -38,7 +43,7 @@
         style="display: none"
         accept=".png, .jpeg, .jpg, .bmp"
         v-model="file"
-        @update:model-value="loadImage()"
+        @update:model-value="loadImage(file)"
       ></q-file>
       <div class="row justify-center q-pt-md">
         <q-btn
@@ -77,12 +82,33 @@ export default defineComponent({
     const file: Ref<File | null> = ref(null);
     const images = ref([props.image]);
 
-    const loadImage = async () => {
-      const image = await blobToDataURL(new Blob([file.value as File]));
+    const loadImage = async (file: File) => {
+      const image = await blobToDataURL(new Blob([file]));
       images.value = [image];
     };
 
+    const allowDrop = (e: DragEvent) => {
+      e.preventDefault();
+    };
+
+    const drop = async (e: DragEvent) => {
+      e.preventDefault();
+      const files = e.dataTransfer?.files;
+      if (files?.length == 1) {
+        const fileType = files[0].type;
+        if (
+          fileType == 'image/png' ||
+          fileType == 'image/jpeg' ||
+          fileType == 'image/bmp'
+        ) {
+          await loadImage(files[0]);
+        }
+      }
+    };
+
     return {
+      allowDrop,
+      drop,
       filePicker,
       file,
       images,
