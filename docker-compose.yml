@@ -6,7 +6,7 @@ services:
     ports:
       - "5000:5000"
     restart: always
-    container_name: spm_backend
+    container_name: redrawer_backend
 
   frontend:
     depends_on:
@@ -15,4 +15,4 @@ services:
     ports:
       - "7000:7000"
     restart: always
-    container_name: spm_frontend
+    container_name: redrawer_frontend

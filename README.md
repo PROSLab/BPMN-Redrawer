@@ -1,16 +1,10 @@
 # BPMN Redrawer
 
-![GitHub Actions Status](https://github.com/FabrizioFornari/SPM2021-RAM/actions/workflows/test-and-deploy.yml/badge.svg)
-[![DigitalOcean Referral Badge](https://web-platforms.sfo2.digitaloceanspaces.com/WWW/Badge%202.svg)](https://www.digitalocean.com/?refcode=c810a2d160c6&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge)
-
-Project developed using Scrum Methodology for the lab part of Software Project Management course, held by Prof. Fabrizio Fornari at the University of Camerino.
-
-
 **The full documentation of the project is availble in the [GitHub Wiki](../../wiki)**
 
-## Project Goal
+## BPMN Redrawer Goal
 
-The goal of the project consists of implementing a web application that allows to upload images (*.png*) of BPMN models and turns those images in actual BPMN models stored in *.bpmn* format.
+The goal of the BPMN Redrawer consists of implementing a web application that allows to upload images of BPMN models and turns those images in actual BPMN models stored in *.bpmn* format.
 
 ## Functionalities
 

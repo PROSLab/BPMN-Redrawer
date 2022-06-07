@@ -194,6 +194,9 @@ CATEGORIES = {
     2: "messageIntermediateCatchEvent",
     3: "inclusiveGateway",
     4: "errorEndEvent",
+    5: "signalIntermediateCatchEvent",
+    6: "signalIntermediateThrowEvent",
+    7: "linkIntermediateCatchEvent",
     8: "participant",
     9: "messageIntermediateThrowEvent",
     10: "endEvent",
@@ -211,20 +214,48 @@ CATEGORIES = {
     22: "complexGateway",
     23: "intermediateThrowEvent",
     24: "escalationIntermediateThrowEvent",
+    25: "compensateEndEvent",
+    26: "conditionalStartEvent",
+    27: "linkIntermediateThrowEvent",
+    28: "signalEndEvent",
+    29: "dataStoreReference",
+    30: "conditionalIntermediateCatchEvent",
+    31: "compensateIntermediateThrowEvent"
 }
 
 FACTORIES = {
     "messageEndEvent": GenericElementFactory(EndEvent, "messageEventDefinition"),
+    "task": GenericElementFactory(Task, "task"),
+    "messageIntermediateCatchEvent": GenericElementFactory(
+        IntermediateCatchEvent, "messageEventDefinition"
+    ),
+    "inclusiveGateway": GenericElementFactory(Gateway, "inclusiveGateway"),
     "errorEndEvent": GenericElementFactory(EndEvent, "errorEventDefinition"),
+    "participant": ParticipantFactory(),
     "messageIntermediateThrowEvent": GenericElementFactory(
         IntermediateThrowEvent, "messageEventDefinition"
     ),
+    "endEvent": GenericElementFactory(EndEvent, "endEvent"),
+    "messageStartEvent": GenericElementFactory(StartEvent, "messageEventDefinition"),
+    "parallelGateway": GenericElementFactory(Gateway, "parallelGateway"),
     "timerIntermediateCatchEvent": GenericElementFactory(
         IntermediateCatchEvent, "timerEventDefinition"
     ),
     "exclusiveGateway": GenericElementFactory(Gateway, "exclusiveGateway"),
     "eventBasedGateway": GenericElementFactory(Gateway, "eventBasedGateway"),
     "dataObjectReference": GenericElementFactory(Task, "dataObjectReference"),
+    "escalationEndEvent": GenericElementFactory(EndEvent, "escalationEventDefinition"),
+    "signalStartEvent": GenericElementFactory(StartEvent, "signalEventDefinition"),
+    "startEvent": GenericElementFactory(StartEvent, "startEvent"),
+    "timerStartEvent": GenericElementFactory(StartEvent, "timerEventDefinition"),
+    "terminateEndEvent": GenericElementFactory(EndEvent, "terminateEventDefinition"),
+    "complexGateway": GenericElementFactory(Gateway, "complexGateway"),
+    "intermediateThrowEvent": GenericElementFactory(
+        IntermediateThrowEvent, "intermediateThrowEvent"
+    ),
+    "escalationIntermediateThrowEvent": GenericElementFactory(
+        IntermediateThrowEvent, "escalationEventDefinition"
+    ),
 }
 
 
