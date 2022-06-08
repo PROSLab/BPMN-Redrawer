@@ -11,7 +11,11 @@ services:
   frontend:
     depends_on:
       - backend
-    build: frontend
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+      args:
+        - BACKEND_URL=${BACKEND_URL:-http://localhost:5000}
     ports:
       - "7000:7000"
     restart: always
