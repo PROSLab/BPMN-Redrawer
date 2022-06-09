@@ -15,7 +15,7 @@ services:
       context: frontend
       dockerfile: Dockerfile
       args:
-        - BACKEND_URL=${BACKEND_URL:-http://localhost:5000}
+        - BACKEND_URL=${BACKEND_URL}
     ports:
       - "7000:7000"
     restart: always

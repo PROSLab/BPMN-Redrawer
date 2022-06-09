@@ -98,6 +98,10 @@ class KeyPointPredictor:
         return outs
 
 
+object_predictor = ObjectPredictor()
+keypoint_predictor = KeyPointPredictor()
+
+
 def predict_object(image: ndarray) -> List[ObjectPrediction]:
     """Pass an image to a trained object detection neural network model that returns the detected instances with the
     associated labels
@@ -113,8 +117,7 @@ def predict_object(image: ndarray) -> List[ObjectPrediction]:
         The list of ObjectPrediction
     """
 
-    pred = ObjectPredictor()
-    predictions = pred.predict(image)
+    predictions = object_predictor.predict(image)
 
     pred_boxes = predictions.get("instances").get("pred_boxes").tensor.numpy()
     pred_classes = predictions.get("instances").get("pred_classes").numpy()
@@ -138,8 +141,7 @@ def predict_keypoint(image: ndarray) -> List[KeyPointPrediction]:
         The list of KeyPointPrediction
     """
 
-    predictor = KeyPointPredictor()
-    predictions = predictor.predict(image)
+    predictions = keypoint_predictor.predict(image)
 
     boxes = predictions.get("instances").get("pred_boxes").tensor.numpy()
     classes = predictions.get("instances").get("pred_classes").numpy()

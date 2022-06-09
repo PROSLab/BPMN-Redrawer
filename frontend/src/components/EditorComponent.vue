@@ -15,7 +15,7 @@
             style="display: none"
             accept=".bpmn"
             v-model="pickedFile"
-            @update:model-value="uploadDiagram(pickedFile)"
+            @update:model-value="uploadDiagram(pickedFile as File)"
           ></q-file>
           <q-btn
             class="open-button"
@@ -54,7 +54,7 @@
         style="display: none"
         accept=".bpmn"
         v-model="bpmnFile"
-        @update:model-value="uploadDiagram(bpmnFile)"
+        @update:model-value="uploadDiagram(bpmnFile as File)"
       ></q-file>
       <li>
         <q-btn

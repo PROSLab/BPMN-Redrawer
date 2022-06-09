@@ -38,9 +38,9 @@ def elements():
     yield elements, texts
 
 
-def test_get_text_from_png(text):
+def test_get_text_from_img(text):
     image = cv2.imread(here("../fixtures/img.png"), cv2.IMREAD_UNCHANGED)
-    txt = os.get_text_from_png(image)
+    txt = os.get_text_from_img(image)
     assert txt == text
 
 

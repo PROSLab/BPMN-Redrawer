@@ -6,7 +6,7 @@ from bpmn_redrawer_backend.bpmn.predictions import Text
 from bpmn_redrawer_backend.commons.utils import get_nearest_element
 
 
-def get_text_from_png(img: ndarray) -> List[Text]:
+def get_text_from_img(img: ndarray) -> List[Text]:
     """Extract all the text from an image using OCR with pytesseract
 
     Parameters
