@@ -1,3 +1,5 @@
+import sys
+sys.path.append('.')
 from bpmn_redrawer_backend.app import create_app
 
 app = create_app()

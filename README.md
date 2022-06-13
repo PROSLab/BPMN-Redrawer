@@ -4,11 +4,20 @@
 
 ## BPMN Redrawer Goal
 
-The goal of the BPMN Redrawer consists of implementing a web application that allows to upload images of BPMN models and turns those images in actual BPMN models stored in *.bpmn* format.
+BPMN Redrawer is a web application that allows to upload images representing BPMN models to convert them in actual BPMN models stored in *.bpmn* format.
+
+## Table of contents
+<!--ts-->
+   * [Functionalities](#functionalities)
+   * [Quickstart](#quickstart)
+   * [Backend](#backend)
+   * [Frontend](#frontend)
+   * [Docker-Compose](#docker-compose)
+<!--te-->
 
 ## Functionalities
 
-The user, through the simple and intuitive GUI, can load an image from the local storage in different formats (PNG, JPEG, BMP). The image is then displayed and is ready to be converted. After that, the backend receives the loaded image, extracts the elements and link them togheter in order to obtain the final *.bpmn* file. At this pont the result comes back to the frontend and, using the GUI, can be downloaded or can be shown and edited thanks to the integration of [*bpmn-js*](https://bpmn.io/toolkit/bpmn-js/) library.
+The user, through the simple and intuitive GUI, can load an image from the local storage in different formats (PNG, JPEG, BMP). The image is then displayed and is ready to be converted. After that, the backend receives the loaded image, extracts the elements and link them togheter in order to obtain the final *.bpmn* file. At this pont the result comes back to the frontend and, using the GUI, can be downloaded or can be shown and edited thanks to the integration of the [*bpmn-js*](https://bpmn.io/toolkit/bpmn-js/) library.
 
 Overall, the application is able to provide the following functionalities:
 - Convert an image into the corresponding *.bpmn* model;
@@ -17,9 +26,7 @@ Overall, the application is able to provide the following functionalities:
 - Edit the converted model;
 - Open, edit and download an existing *.bpmn* model;
 - Create a BPMN model from scratch and download it as *.bpmn* file or *.svg* image;
-- Register and login to leverage further features:
-    - Visualize the conversion history;
-    - Open, edit, save and download a previously converted model.
+- Load an image next to the BPMN editor.
 
 At present the application is able to detect the following BPMN elements with a fair average precision:
 
@@ -70,32 +77,40 @@ Our web application is available and ready to use at the following link:
 **[BPMN Redrawer](https://bpmn-redrawer.me/)**
 
 The user can perform very simple steps to obtain a *.bpmn* file starting from an image:
-- In the *HOME* window, you can load an image from local storage with the corresponding button;
+- In the *HOME* page, the user can load an image from local storage with the corresponding button or one of the sample images by clicking on them;
 <p align="center">
 <img src="extra/images/home.png" width="90%" />
 </p>
 
 - If correctly loaded, the image will be displayed;
-- Then the *CONVERT* button can be used to start the conversion (it takes a few seconds to complete the process);
+- Different options can be enabled to be performed by the backend, such as:
+    - object detection for the BPMN elements;
+    - keypoint detection for the BPMN flows;
+    - OCR for the BPMN labels;
+- Then the *CONVERT* button can be clicked to start the conversion (it takes a few seconds to complete the process);
 - Once the conversion is done, the user can either download or view and edit the resulting model;
-- By selecting the *VIEW IN EDITOR* button, the *EDITOR* window will allow you to see the converted model and, if needed, to edit and correct it. The starting image is displayed next to the model and simplifies the revising process (the image can be hidden with the correspondig button);
+- By selecting the *VIEW IN EDITOR* button, the *EDITOR* page will allow the user to see the converted model and, if needed, to edit and correct it. The starting image is displayed next to the model and simplifies the revising process (a vertical splitter can be moved to resize the BPMN editor and the image viewer);
 <p align="center">
 <img src="extra/images/editor.png" width="90%" />
 </p>
 
-- If you are happy with the result you can download the final model either as *.bpmn* file or as *.svg* image.
+- If the user is happy with the result, the final model can be downloaded either as *.bpmn* file or as *.svg* image.
 
-You can also use the *EDITOR* window to open, edit and download an existing *.bpmn* model or to create a BPMN model from scratch.
-You can finally register to the service in order to leverage further features:
-- The registration and log-in can be carried out with the button at the top-right side, simply using your email and password;
-- Once logged in, you can see your conversions history (by clicking the top-left button a new panel will appear with the possibility to see the history);
-- From the history you can then open, edit, save and download a previously converted model.
-<p align="center">
-<img src="extra/images/history.png" width="90%" />
-</p>
+The user can also use the *EDITOR* page to open, edit and download an existing *.bpmn* model or to create a BPMN model from scratch, as well as loading an image in the image viewer.
 
-## Team
+## Backend
 
-- Alessandro Antinori <img src="https://aux.iconspalace.com/uploads/email-blue-icon-256.png" alt="drawing" width="20"/> <alessandro.antinori@studenti.unicam.it>
-- Coltrinari Riccardo <img src="https://aux.iconspalace.com/uploads/email-blue-icon-256.png" alt="drawing" width="20"/> <riccardo.coltrinari@studenti.unicam.it>
-- Marco Scarpetta    <img src="https://aux.iconspalace.com/uploads/email-blue-icon-256.png" alt="drawing" width="20"/> <marco.scarpetta@studenti.unicam.it>
+The instructions for the backend can be found at [Backend README](backend/README.md).
+
+## Frontend
+
+The instructions for the frontend can be found at [Frontend README](frontend/README.md).
+
+## Docker-Compose
+
+BPMN Redrawer is also available as a containerized application thanks to the [docker-compose.yml](docker-compose.yml) file.
+
+From the root folder it is sufficient to launch the command
+```bash
+docker-compose up
+```

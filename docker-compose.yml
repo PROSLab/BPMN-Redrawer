@@ -5,7 +5,7 @@ services:
     build: backend
     ports:
       - "5000:5000"
-    restart: always
+    restart: unless-stopped
     container_name: redrawer_backend
 
   frontend:
@@ -18,5 +18,5 @@ services:
         - BACKEND_URL=${BACKEND_URL}
     ports:
       - "7000:7000"
-    restart: always
+    restart: unless-stopped
     container_name: redrawer_frontend
