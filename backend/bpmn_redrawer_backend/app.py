@@ -1,26 +1,32 @@
-from flask import Flask
-from flask_cors import CORS
-from flask_restful import Api
-from bpmn_redrawer_backend.api.resources.convert_resource import ConvertApi
+import os
+import uvicorn
+from starlette.applications import Starlette
+from starlette.middleware import Middleware
+from starlette.middleware.cors import CORSMiddleware
+from starlette.routing import Route
+from starlette.staticfiles import StaticFiles
+from bpmn_redrawer_backend.api.resources.convert_resource import convert_image
+from bpmn_redrawer_backend.commons.utils import here
 
 
-def create_app(testing=False):
-    """Application factory, used to create application"""
+def create_app():
+    debug = os.environ.get("BACKEND_MODE", "development").lower() == "development"
+    app = Starlette(
+        debug=debug,
+        routes=[
+            Route('/api/v1/convert', convert_image, methods=['POST']),
+        ],
+        middleware=[
+            Middleware(CORSMiddleware, allow_origins=['*'], allow_methods=['*'])
+        ]
+    )
 
-    app = Flask("bpmn_redrawer")
-    CORS(app, origins=["*"])
-    app.config.from_object("bpmn_redrawer_backend.config")
-
-    if testing is True:
-        app.config["TESTING"] = True
-
-    add_resources(app)
+    static_files_folder = here("static")
+    if os.path.exists(static_files_folder) and os.path.isdir(static_files_folder):
+        app.mount('/', StaticFiles(directory=static_files_folder, html=True))
 
     return app
 
 
-def add_resources(app):
-    """Add the routes to the Api of the given app"""
-
-    api = Api(app)
-    api.add_resource(ConvertApi, "/api/v1/convert")
+if __name__ == "__main__":
+    uvicorn.run(create_app(), host='0.0.0.0', port=int(os.environ.get("BACKEND_PORT", "5000")))

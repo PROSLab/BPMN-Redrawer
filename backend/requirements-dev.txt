@@ -1,7 +1,4 @@
 marshmallow~=3.14.1
-flask~=2.0.2
-flask-restful
-flask-cors~=3.0.10
 python-dotenv~=0.19.2
 passlib~=1.7.4
 pre-commit>=2.13.0
@@ -17,4 +14,7 @@ pytesseract~=0.3.8
 torch~=1.10.1
 torchvision~=0.11.2
 Jinja2~=3.0.3
+starlette==0.20.3
+uvicorn==0.17.6
+python-multipart==0.0.5
 # git+https://github.com/facebookresearch/detectron2.git@v0.6
