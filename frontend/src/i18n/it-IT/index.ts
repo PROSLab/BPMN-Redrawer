@@ -16,6 +16,8 @@ export default {
     errorLoading: "Errore durante il caricamento dell'immagine",
     uploading: 'Caricando...',
     uploadingProgress: 'Caricando... {progress}%',
+    waitingForConversion:
+      'Attendi qualche istante. Stiamo ridisegnando il modello!',
     errorUploading: 'Errore durante il caricamento',
     elements: 'Elementi',
     flows: 'Flussi',

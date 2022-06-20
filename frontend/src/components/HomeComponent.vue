@@ -274,9 +274,12 @@ export default defineComponent({
               (progressEvent.loaded / progressEvent.total) * 100
             );
             uploadDialog.update({
-              message: i18n.global.t('home.uploadingProgress', {
-                progress: progress,
-              }),
+              message:
+                progress == 100
+                  ? i18n.global.t('home.waitingForConversion')
+                  : i18n.global.t('home.uploadingProgress', {
+                      progress: progress,
+                    }),
             });
           },
         })

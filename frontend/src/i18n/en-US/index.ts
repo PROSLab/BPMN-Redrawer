@@ -16,6 +16,8 @@ export default {
     errorLoading: 'Error while loading the image',
     uploading: 'Uploading...',
     uploadingProgress: 'Uploading... {progress}%',
+    waitingForConversion:
+      'Please wait for a few seconds. We are redrawing your model!',
     errorUploading: 'Error while uploading',
     elements: 'Elements',
     flows: 'Flows',
