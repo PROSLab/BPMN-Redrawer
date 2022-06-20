@@ -14,8 +14,8 @@ RUN mkdir /backend
 RUN mkdir /frontend
 COPY backend/bpmn_redrawer_backend backend/bpmn_redrawer_backend/
 COPY frontend frontend
-RUN [ -f backend/bpmn_redrawer_backend/detectron_model/final_model.pth ] && echo "Object Detection model found" || { echo "Object Detection model not found!"; wget -O backend/bpmn_redrawer_backend/detectron_model/final_model.pth https://huggingface.co/DragonAlex98/BPMN-Redrawer-Models/resolve/main/final_model.pth; }
-RUN [ -f backend/bpmn_redrawer_backend/detectron_model/kp_final_model.pth ] && echo "KeyPoint Prediction model found" || { echo "KeyPoint Prediction model not found!"; wget -O backend/bpmn_redrawer_backend/detectron_model/kp_final_model.pth https://huggingface.co/DragonAlex98/BPMN-Redrawer-Models/resolve/main/kp_final_model.pth; }
+RUN [ -f backend/bpmn_redrawer_backend/detectron_model/final_model.pth ] && echo "Object Detection model found" || { echo "Object Detection model not found!"; wget -O backend/bpmn_redrawer_backend/detectron_model/final_model.pth https://huggingface.co/PROSLab/BPMN-Redrawer-Models/resolve/main/final_model.pth; }
+RUN [ -f backend/bpmn_redrawer_backend/detectron_model/kp_final_model.pth ] && echo "KeyPoint Prediction model found" || { echo "KeyPoint Prediction model not found!"; wget -O backend/bpmn_redrawer_backend/detectron_model/kp_final_model.pth https://huggingface.co/PROSLab/BPMN-Redrawer-Models/resolve/main/kp_final_model.pth; }
 
 RUN apt-get install -y apt-transport-https
 RUN echo 'deb https://notesalexp.org/tesseract-ocr-dev/bullseye/ bullseye main' >> /etc/apt/sources.list
