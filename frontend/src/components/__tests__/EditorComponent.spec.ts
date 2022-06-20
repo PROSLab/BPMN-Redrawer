@@ -18,17 +18,4 @@ describe('EditorComponent', () => {
     const nonExistingClasses = ['.exit-button', '.download-buttons'];
     nonExistingClasses.forEach((c) => void cy.get(c).should('not.exist'));
   });
-
-  it('has an "exit" button that leads to home', () => {
-    mount(EditorComponent);
-
-    cy.get('.create-button').click();
-    cy.get('.exit-button > .q-btn').should('have.attr', 'href', '#/home');
-  });
-
-  it('opens the bpmn-js editor', () => {
-    mount(EditorComponent);
-
-    cy.get('.download-buttons').should('exist');
-  });
 });

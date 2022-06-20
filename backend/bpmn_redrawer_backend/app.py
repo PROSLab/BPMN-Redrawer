@@ -1,3 +1,5 @@
+import sys
+sys.path.append('.')
 import os
 import uvicorn
 from starlette.applications import Starlette
