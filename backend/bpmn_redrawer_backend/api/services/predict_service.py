@@ -63,7 +63,7 @@ class KeyPointPredictor:
     def __init__(self):
         cfg = get_cfg()
         cfg.merge_from_file(
-            model_zoo.get_config_file("COCO-Keypoints/keypoint_rcnn_R_50_FPN_1x.yaml")
+            model_zoo.get_config_file("COCO-Keypoints/keypoint_rcnn_R_101_FPN_3x.yaml")
         )
         cfg.OUTPUT_DIR = "output"
         cfg.MODEL.WEIGHTS = here("../../detectron_model/kp_final_model.pth")

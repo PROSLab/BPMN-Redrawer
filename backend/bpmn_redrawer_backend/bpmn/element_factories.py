@@ -11,7 +11,7 @@ from bpmn_redrawer_backend.bpmn.bpmn_elements import (
     StartEvent,
     EndEvent,
     IntermediateThrowEvent,
-    IntermediateCatchEvent,
+    IntermediateCatchEvent, TextAnnotation,
 )
 from bpmn_redrawer_backend.bpmn.bpmn_flows import SequenceFlow, MessageFlow
 from bpmn_redrawer_backend.bpmn.predictions import ObjectPrediction
@@ -189,38 +189,39 @@ class ParticipantFactory(BPMNFactory):
 
 
 CATEGORIES = {
-    0: "messageEndEvent",
-    1: "task",
-    2: "messageIntermediateCatchEvent",
-    3: "inclusiveGateway",
-    4: "errorEndEvent",
-    5: "signalIntermediateCatchEvent",
-    6: "signalIntermediateThrowEvent",
-    7: "linkIntermediateCatchEvent",
-    8: "participant",
-    9: "messageIntermediateThrowEvent",
-    10: "endEvent",
-    11: "messageStartEvent",
-    12: "parallelGateway",
-    13: "timerIntermediateCatchEvent",
-    14: "exclusiveGateway",
-    15: "eventBasedGateway",
-    16: "dataObjectReference",
-    17: "escalationEndEvent",
-    18: "signalStartEvent",
-    19: "startEvent",
-    20: "timerStartEvent",
-    21: "terminateEndEvent",
-    22: "complexGateway",
-    23: "intermediateThrowEvent",
-    24: "escalationIntermediateThrowEvent",
-    25: "compensateEndEvent",
-    26: "conditionalStartEvent",
-    27: "linkIntermediateThrowEvent",
-    28: "signalEndEvent",
-    29: "dataStoreReference",
-    30: "conditionalIntermediateCatchEvent",
-    31: "compensateIntermediateThrowEvent"
+    0: "compensateEndEvent",
+    1: "timerIntermediateCatchEvent",
+    2: "signalIntermediateCatchEvent",
+    3: "messageIntermediateCatchEvent",
+    4: "escalationEndEvent",
+    5: "inclusiveGateway",
+    6: "eventBasedGateway",
+    7: "signalStartEvent",
+    8: "timerStartEvent",
+    9: "task",
+    10: "conditionalStartEvent",
+    11: "messageEndEvent",
+    12: "dataObjectReference",
+    13: "exclusiveGateway",
+    14: "complexGateway",
+    15: "dataStoreReference",
+    16: "endEvent",
+    17: "parallelGateway",
+    18: "textAnnotation",
+    19: "escalationIntermediateThrowEvent",
+    20: "conditionalIntermediateCatchEvent",
+    21: "startEvent",
+    22: "messageStartEvent",
+    23: "signalIntermediateThrowEvent",
+    24: "intermediateThrowEvent",
+    25: "errorEndEvent",
+    26: "linkIntermediateThrowEvent",
+    27: "messageIntermediateThrowEvent",
+    28: "compensateIntermediateThrowEvent",
+    29: "signalEndEvent",
+    30: "participant",
+    31: "terminateEndEvent",
+    32: "linkIntermediateCatchEvent"
 }
 
 FACTORIES = {
@@ -256,6 +257,17 @@ FACTORIES = {
     "escalationIntermediateThrowEvent": GenericElementFactory(
         IntermediateThrowEvent, "escalationEventDefinition"
     ),
+    "compensateEndEvent": GenericElementFactory(EndEvent, "compensateEventDefinition"),
+    "signalIntermediateCatchEvent": GenericElementFactory(IntermediateCatchEvent, "signalEventDefinition"),
+    "conditionalStartEvent": GenericElementFactory(StartEvent, "conditionalEventDefinition"),
+    "dataStoreReference": GenericElementFactory(Task, "dataStoreReference"),
+    "conditionalIntermediateCatchEvent": GenericElementFactory(IntermediateCatchEvent, "conditionalEventDefinition"),
+    "signalIntermediateThrowEvent": GenericElementFactory(IntermediateThrowEvent, "signalEventDefinition"),
+    "linkIntermediateThrowEvent": GenericElementFactory(IntermediateThrowEvent, "linkEventDefinition"),
+    "compensateIntermediateThrowEvent": GenericElementFactory(IntermediateThrowEvent, "compensateEventDefinition"),
+    "signalEndEvent": GenericElementFactory(EndEvent, "signalEventDefinition"),
+    "linkIntermediateCatchEvent": GenericElementFactory(IntermediateCatchEvent, "linkEventDefinition"),
+    "textAnnotation": GenericElementFactory(TextAnnotation, "")
 }
 
 

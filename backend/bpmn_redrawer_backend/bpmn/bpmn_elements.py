@@ -223,6 +223,32 @@ class Task(Element):
         return data
 
 
+class TextAnnotation(Element):
+    """Represents a BPMN Text Association.
+
+        Parameters
+        ----------
+        id : str
+            Unique identifier of the BPMN Element.
+        prediction : ObjectPrediction
+            The prediction given by the object detection predictor.
+    """
+    def __init__(self, id: str, prediction: ObjectPrediction, type: str):
+        super(TextAnnotation, self).__init__(id, prediction)
+        self.type = type
+
+    def render_element(self):
+        template = """<bpmn:textAnnotation id="{{ textAnnotation.id }}">
+      <bpmn:text>{{ textAnnotation.get_name() }}</bpmn:text>
+    </bpmn:textAnnotation>
+        """
+
+        rtemplate = self.jinja_environment.from_string(template)
+        data = rtemplate.render(textAnnotation=self)
+
+        return data
+
+
 @dataclass()
 class Process:
     """Represents a BPMN Process which contains the elements of the BPMN Diagram.
