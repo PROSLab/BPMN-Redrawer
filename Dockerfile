@@ -26,8 +26,9 @@ RUN wget -O - https://notesalexp.org/debian/alexp_key.asc | apt-key add -
 RUN apt-get update
 RUN apt-get install -y tesseract-ocr
 
+COPY backend/requirements.txt ./
 RUN pip install -U pip
-RUN pip install -r bpmn_redrawer_backend/requirements.txt
+RUN pip install -r requirements.txt
 RUN pip install git+https://github.com/facebookresearch/detectron2.git@v0.6
 
 COPY --from=frontend /app/dist/spa /app/bpmn_redrawer_backend/static
