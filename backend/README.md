@@ -34,5 +34,5 @@ From the [backend](./) folder:
     ```
 - Launch the application
     ```bash
-    python bpmn_redrawer_backend/wsgi.py
+    python bpmn_redrawer_backend/app.py
     ```

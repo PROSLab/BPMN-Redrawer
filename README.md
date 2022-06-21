@@ -1,9 +1,5 @@
 # BPMN Redrawer
 
-**The full documentation of the project is availble in the [GitHub Wiki](../../wiki)**
-
-## BPMN Redrawer Goal
-
 BPMN Redrawer is a web application that allows to upload images representing BPMN models to convert them in actual BPMN models stored in *.bpmn* format.
 
 ## Table of contents
@@ -12,7 +8,7 @@ BPMN Redrawer is a web application that allows to upload images representing BPM
    * [Quickstart](#quickstart)
    * [Backend](#backend)
    * [Frontend](#frontend)
-   * [Docker-Compose](#docker-compose)
+   * [How to run](#how-to-run)
 <!--te-->
 
 ## Functionalities
@@ -74,7 +70,7 @@ Moreover it is able to detect and render *Sequence Flow* and *Message Flow*.
 ## Quickstart
 
 Our web application is available and ready to use at the following link:
-**[BPMN Redrawer](https://bpmn-redrawer.me/)**
+**[BPMN Redrawer](https://pros.unicam.it/bpmn-redrawer-tool/)**
 
 The user can perform very simple steps to obtain a *.bpmn* file starting from an image:
 - In the *HOME* page, the user can load an image from local storage with the corresponding button or one of the sample images by clicking on them;
@@ -98,19 +94,39 @@ The user can perform very simple steps to obtain a *.bpmn* file starting from an
 
 The user can also use the *EDITOR* page to open, edit and download an existing *.bpmn* model or to create a BPMN model from scratch, as well as loading an image in the image viewer.
 
+## How to run
+
+BPMN Redrawer is available as a Docker image by creating it from this folder or pulling it from [DockerHub](https://hub.docker.com/r/proslab/bpmn-redrawer).
+
+To build the image, from the root folder it is sufficient to launch the command:
+```bash
+docker build -t bpmn-redrawer-image .
+```
+
+Once the image has been built, it is possible to run it with the command:
+```bash
+docker run -d -p 5000:5000 -e BACKEND_PORT=5000 -e BACKEND_MODE=production --name bpmn-redrawer-container bpmn-redrawer-image
+```
+
+Otherwise the application can be run with a single command, using the latest image available on DockerHub:
+
+```bash
+docker run -d -p 5000:5000 -e BACKEND_PORT=5000 -e BACKEND_MODE=production --name bpmn-redrawer-container proslab/bpmn-redrawer
+```
+
+Two variables are available when running the container:
+- BACKEND_MODE: <b>development</b> or <b>production</b> (default=<b>production</b>)
+- BACKEND_PORT: which port the container will use internally to run the app (default=<b>5000</b>). This is the containerPort in the command:
+    ```bash
+    -p hostPort:containerPort
+    ```
+
+Once launched, the application will be available at [http://localhost:5000](http://localhost:5000).
+
 ## Backend
 
-The instructions for the backend can be found at [Backend README](backend/README.md).
+The [Backend README](backend/README.md) contains more instructions on how to launch/develop the backend.
 
 ## Frontend
 
-The instructions for the frontend can be found at [Frontend README](frontend/README.md).
-
-## Docker-Compose
-
-BPMN Redrawer is also available as a containerized application thanks to the [docker-compose.yml](docker-compose.yml) file.
-
-From the root folder it is sufficient to launch the command
-```bash
-docker-compose up
-```
+The [Frontend README](frontend/README.md) contains more instructions on how to launch/develop the frontend.
