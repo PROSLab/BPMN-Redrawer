@@ -98,6 +98,14 @@ The user can also use the *EDITOR* page to open, edit and download an existing *
 
 BPMN Redrawer is available as a Docker image by creating it from this folder or pulling it from [DockerHub](https://hub.docker.com/r/proslab/bpmn-redrawer).
 
+First of all, download the trained detectron2 models from [Hugging Face](https://huggingface.co/PROSLab/BPMN-Redrawer-Models/tree/main) and move them in the [detectron_model](backend/bpmn_redrawer_backend/detectron_model) folder.
+
+In particular these two models are:
+- <b>final_model.pth</b>: the Object Detection model;
+- <b>kp_final_model.pth</b>: the KeyPoint Prediction model.
+
+This is needed when working with the application without using containers. When using the containers, the models will be downloaded automatically.
+
 To build the image, from the root folder it is sufficient to launch the command:
 ```bash
 docker build -t bpmn-redrawer-image .
