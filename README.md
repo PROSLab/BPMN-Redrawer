@@ -29,43 +29,58 @@ At present the application is able to detect the following BPMN elements with a 
 <table>
 <tr><td>
 
-|Element                          | AP
-|---------------------------------|-----
-| MessageEndEvent                 | 95.9
-| InclusiveGateway                | 93.4
-| SubProcess                      | 60.0
-| MessageIntermediateThrowEvent   | 100.0
-| ParallelGateway                 | 99.0
-| EventBasedGateway               | 100.0
-| SignalStartEvent                | 100.0
-| TerminateEndEvent               | 100.0
-| EscalationIntermediateThrowEvent| 100.0
-| Task                            | 91.0
-| ErrorEndEvent                   | 100.0
-| SendTask                        | 99.3
-| EndEvent                        | 97.7
+| BPMN Nodes                            | AP
+|---------------------------------------|-----
+| Start Event                           | 96.923
+| Start Message Event                   | 98.796
+| Start Timer Event                     | 100.0
+| Start Conditional Event               | 99.901
+| Start Signal Event                    | 98.713
+| Intermediate Catch Message Event      | 94.489
+| Intermediate Catch Timer Event        | 98.811
+| Intermediate Catch Conditional Event  | 99.010
+| Intermediate Catch Signal Event       | 99.010
+| Intermediate Catch Link Event         | 100.0
+| Intermediate Throw Event              | 86.139
+| Intermediate Throw Message Event      | 88.355
+| Intermediate Throw Escalation Event   | 99.622
+| Intermediate Throw Compensation Event | 100.0
+| Intermediate Throw Signal Event       | 99.586 
+| Intermediate Throw Link Event         | 100.0
+
 
 </td><td>
 
-|Element                         | AP
-|--------------------------------|-----
-| TimerIntermediateCatchEvent    | 97.9
-| DataObjectReference            | 86.1
-| StartEvent                     | 97.5
-| ComplexGateway                 | 100.0
-| UserTask                       | 87.4
-| MessageIntermediateCatchEvent  | 95.5
-| ServiceTask                    | 87.8
-| Participant                    | 88.2
-| MessageStartEvent              | 99.6
-| ExclusiveGateway               | 96.3
-| EscalationEndEvent             | 96.9
-| TimerStartEvent                | 95.2
-| IntermediateThrowEvent         | 98.0
+| BPMN Nodes              | AP
+|-------------------------|-----
+| End Event               | 96.406
+| End Message Event       | 80.499
+| End Escalation Event    | 99.802
+| End Compensation Event  | 100.0
+| End Signal Event        | 99.218
+| End Error Event         | 100.0
+| End Terminate Event     | 98.803
+| Esclusive Gateway       | 96.512
+| Parallel Gateway        | 96.427
+| Inclusive Gateway       | 93.915
+| Event-Based Gateway     | 89.109
+| Task                    | 97.653
+| Data Object             | 96.819
+| Data Store              | 100.0
+| Text Annotation         | 72.670
+| Pool                    | 95.870
+
+</td><td>
+
+| BPMN Connecting Objects | AP-box | AP-keypoints|
+|-------------------------|--------|-------------|
+| Sequence Flow           | 82.988 | 96.865      |
+| Message Flow            | 73.678 | 88.316      | 
+| Data Association        | 65.154 | 84.546      |
+
+
 </td></tr> </table>
 
-
-Moreover it is able to detect and render *Sequence Flow* and *Message Flow*.
 
 ## Quickstart
 
