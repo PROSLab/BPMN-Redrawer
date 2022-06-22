@@ -6,9 +6,9 @@ BPMN Redrawer is a web application that allows to upload images representing BPM
 <!--ts-->
    * [Functionalities](#functionalities)
    * [Quickstart](#quickstart)
+   * [How to run](#how-to-run)
    * [Backend](#backend)
    * [Frontend](#frontend)
-   * [How to run](#how-to-run)
 <!--te-->
 
 ## Functionalities
@@ -70,7 +70,10 @@ Moreover it is able to detect and render *Sequence Flow* and *Message Flow*.
 ## Quickstart
 
 Our web application is available and ready to use at the following link:
-**[BPMN Redrawer](https://pros.unicam.it/bpmn-redrawer-tool/)**
+**[BPMN Redrawer](https://pros.unicam.it/bpmn-redrawer-tool/)**.
+
+A tutorial on its usage is available by clicking the image below:
+[![Watch the video](https://img.youtube.com/vi/0e2qnbSp9XY/maxresdefault.jpg)](https://youtu.be/0e2qnbSp9XY)
 
 The user can perform very simple steps to obtain a *.bpmn* file starting from an image:
 - In the *HOME* page, the user can load an image from local storage with the corresponding button or one of the sample images by clicking on them;
