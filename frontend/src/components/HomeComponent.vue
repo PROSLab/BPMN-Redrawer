@@ -140,6 +140,7 @@ import { useRouter } from 'vue-router';
 import { i18n } from 'src/boot/i18n';
 import { blobToDataURL } from './utils/image-utils';
 import axios from 'axios';
+import { useBpmnStore } from 'src/store/bpmnStore';
 
 export default defineComponent({
   name: 'HomeComponent',
@@ -227,11 +228,13 @@ export default defineComponent({
     };
 
     const editModel = async () => {
+      const bpmnStore = useBpmnStore();
       const image = await blobToDataURL(new Blob([imageFile.value as File]));
       const model = conversionResult.value;
+      bpmnStore.image = image;
+      bpmnStore.model = model;
       await router.push({
         name: 'editor',
-        params: { image: image, model: model },
       });
     };
 

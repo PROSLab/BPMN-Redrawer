@@ -2091,6 +2091,11 @@
   resolved "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.0.1.tgz#c198200b9f84c7b6f7c4976b0206cbe1e7f61dc9"
   integrity sha512-V2BKGa9pHf/sY2oBUr4uO8yF5MtgL2X96uJq2cBPxPqEUEkLfhJrbpU7t34JRjnanp2tkDJQrQsrsoMltHnFNQ==
 
+"@vue/devtools-api@^6.1.4":
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.2.1.tgz#6f2948ff002ec46df01420dfeff91de16c5b4092"
+  integrity sha512-OEgAMeQXvCoJ+1x8WyQuVZzFo0wcyCmUR3baRVLmKBo1LmYZWMlRiXlux5jd0fqVJu6PfDbOrZItVqUEzLobeQ==
+
 "@vue/reactivity-transform@3.2.30":
   version "3.2.30"
   resolved "https://registry.yarnpkg.com/@vue/reactivity-transform/-/reactivity-transform-3.2.30.tgz#2006e9f4645777a481b78ae77fc486159afa8480"
@@ -5923,6 +5928,14 @@ pify@^2.2.0:
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
   integrity sha1-7RQaasBDqEnqWISY59yosVMw6Qw=
 
+pinia@2.0.16:
+  version "2.0.16"
+  resolved "https://registry.yarnpkg.com/pinia/-/pinia-2.0.16.tgz#0105db595f5f792e17c04692e36807d8ea62f5cc"
+  integrity sha512-9/LMVO+/epny1NBfC77vnps4g3JRezxhhoF1xLUk8mZkUIxVnwfEAIRiAX8mYBTD/KCwZqnDMqXc8w3eU0FQGg==
+  dependencies:
+    "@vue/devtools-api" "^6.1.4"
+    vue-demi "*"
+
 pkg-dir@^4.1.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/pkg-dir/-/pkg-dir-4.2.0.tgz#f099133df7ede422e81d1d8448270eeb3e4261f3"
@@ -7387,6 +7400,11 @@ viewerjs@^1.9.0:
   version "1.10.3"
   resolved "https://registry.yarnpkg.com/viewerjs/-/viewerjs-1.10.3.tgz#b400c769aa22e3891962b65b0ae93399a92d8d69"
   integrity sha512-X6dSO8aa6+Majmhx2GQcDSOzLClmj9zjsa89lGyG3cKGM2ca8rpGwL+iSRaAtRZalL5+VQ9osg+zfYVcAUyH8g==
+
+vue-demi@*:
+  version "0.13.5"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.13.5.tgz#d5eddbc9eaefb89ce5995269d1fa6b0486312092"
+  integrity sha512-tO3K2bML3AwiHmVHeKCq6HLef2st4zBXIV5aEkoJl6HZ+gJWxWv2O8wLH8qrA3SX3lDoTDHNghLX1xZg83MXvw==
 
 vue-eslint-parser@^7.10.0:
   version "7.11.0"

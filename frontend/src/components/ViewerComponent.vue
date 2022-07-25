@@ -63,24 +63,19 @@ import 'viewerjs/dist/viewer.css';
 import { component as Viewer } from 'v-viewer';
 import { QFile } from 'quasar';
 import { blobToDataURL } from './utils/image-utils';
+import { useBpmnStore } from 'src/store/bpmnStore';
 
 export default defineComponent({
   name: 'ViewerComponent',
 
   components: { Viewer },
 
-  props: {
-    image: {
-      type: String,
-      required: false,
-    },
-  },
-
-  setup(props) {
+  setup() {
+    const bpmnStore = useBpmnStore();
     const viewerDiv: Ref<HTMLElement | null> = ref(null);
     const filePicker: Ref<QFile | null> = ref(null);
     const file: Ref<File | null> = ref(null);
-    const images = ref([props.image]);
+    const images = ref([bpmnStore.image]);
 
     const loadImage = async (file: File) => {
       const image = await blobToDataURL(new Blob([file]));

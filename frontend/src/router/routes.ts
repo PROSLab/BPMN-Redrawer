@@ -14,7 +14,6 @@ const routes: RouteRecordRaw[] = [
         path: 'editor',
         name: 'editor',
         component: () => import('pages/Editor.vue'),
-        props: true,
       },
     ],
   },

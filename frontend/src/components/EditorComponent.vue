@@ -82,19 +82,14 @@ import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
 import Modeler from 'bpmn-js/lib/Modeler';
 import { onBeforeRouteLeave } from 'vue-router';
 import { i18n } from 'src/boot/i18n';
+import { useBpmnStore } from 'src/store/bpmnStore';
 
 export default defineComponent({
   name: 'EditorComponent',
 
-  props: {
-    model: {
-      type: String,
-      required: false,
-    },
-  },
-
-  setup(props) {
+  setup() {
     const $q = useQuasar();
+    const bpmnStore = useBpmnStore();
     const filePicker: Ref<QFile | null> = ref(null);
     const pickedFile: Ref<File | null> = ref(null);
     const bpmnFilePicker: Ref<QFile | null> = ref(null);
@@ -185,8 +180,8 @@ export default defineComponent({
         registerFileDrop(openDiagram);
       }
 
-      if (props.model) {
-        void openDiagram(props.model);
+      if (bpmnStore.model) {
+        void openDiagram(bpmnStore.model);
       }
     });
 

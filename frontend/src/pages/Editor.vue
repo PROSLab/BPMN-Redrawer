@@ -13,7 +13,7 @@
       "
     >
       <template v-slot:before>
-        <editor-component :model="model"></editor-component>
+        <editor-component></editor-component>
       </template>
       <template v-slot:separator>
         <q-avatar
@@ -24,7 +24,7 @@
         />
       </template>
       <template v-slot:after>
-        <viewer-component :image="image"></viewer-component>
+        <viewer-component></viewer-component>
       </template>
     </q-splitter>
   </q-page>
@@ -34,27 +34,19 @@
 import { defineComponent, ref } from 'vue';
 import EditorComponent from 'src/components/EditorComponent.vue';
 import ViewerComponent from 'src/components/ViewerComponent.vue';
+import { useBpmnStore } from 'src/store/bpmnStore';
 
 export default defineComponent({
   name: 'PageEditor',
 
   components: { EditorComponent, ViewerComponent },
 
-  props: {
-    image: {
-      type: String,
-      required: false,
-    },
-    model: {
-      type: String,
-      required: false,
-    },
-  },
+  setup() {
+    const bpmnStore = useBpmnStore();
 
-  setup(props) {
     // Use a splitter to manage the size of the editor and the image viewer
     const splitterModel = ref(
-      props.image != null && props.model != null ? 50 : 90
+      bpmnStore.image != null && bpmnStore.model != null ? 50 : 90
     );
 
     return {
